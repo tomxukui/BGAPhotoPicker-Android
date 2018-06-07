@@ -148,7 +148,7 @@ public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements Pho
 
         mPhotoPageAdapter = new BGAPhotoPageAdapter(this, previewPhotos);
         mContentHvp.setAdapter(mPhotoPageAdapter);
-        mContentHvp.setCurrentItem(currentPosition);
+        mContentHvp.setCurrentItem(currentPosition, false);
 
         // 过2秒隐藏标题栏
         mToolbar.postDelayed(new Runnable() {
