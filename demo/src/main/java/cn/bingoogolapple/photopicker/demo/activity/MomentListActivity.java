@@ -62,7 +62,6 @@ public class MomentListActivity extends BGAPPToolbarActivity implements EasyPerm
         mMomentAdapter = new MomentAdapter(mMomentRv);
         mMomentAdapter.setOnRVItemClickListener(this);
         mMomentAdapter.setOnRVItemLongClickListener(this);
-
         mMomentRv.addOnScrollListener(new BGARVOnScrollListener(this));
     }
 

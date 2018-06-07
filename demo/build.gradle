@@ -37,7 +37,7 @@ dependencies {
     // -------------------- 以下4个库是必须依赖的 ----------------------------
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
-    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
+    implementation project(':library')
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     // -------------------- 以上4个库是必须依赖的 ----------------------------
 
