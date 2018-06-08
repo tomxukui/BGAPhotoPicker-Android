@@ -16,7 +16,6 @@
 package uk.co.senab.photoview;
 
 import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.view.MotionEvent;
