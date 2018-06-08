@@ -10,11 +10,13 @@
         android:shape="ring"
         android:thicknessRatio="20"
         android:useLevel="false">
+
         <gradient
             android:centerColor="@color/bga_pp_loading_progress_centerColor"
             android:endColor="@color/bga_pp_loading_progress_endColor"
             android:startColor="@color/bga_pp_loading_progress_startColor"
             android:type="sweep" />
+
     </shape>
 
 </rotate>

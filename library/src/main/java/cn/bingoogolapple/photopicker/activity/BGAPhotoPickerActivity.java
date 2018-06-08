@@ -59,6 +59,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
     private static final String EXTRA_SELECTED_PHOTOS = "EXTRA_SELECTED_PHOTOS";
     private static final String EXTRA_MAX_CHOOSE_COUNT = "EXTRA_MAX_CHOOSE_COUNT";
     private static final String EXTRA_PAUSE_ON_SCROLL = "EXTRA_PAUSE_ON_SCROLL";
+    private static final String EXTRA_SPAN_COUNT = "EXTRA_SPAN_COUNT";
 
     private static final String STATE_SELECTED_PHOTOS = "STATE_SELECTED_PHOTOS";
 
@@ -70,8 +71,6 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
      * 预览照片的请求码
      */
     private static final int RC_PREVIEW = 2;
-
-    private static final int SPAN_COUNT = 3;
 
     private TextView mTitleTv;
     private ImageView mArrowIv;
@@ -107,15 +106,18 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
     private AppCompatDialog mLoadingDialog;
 
     private BGAOnNoDoubleClickListener mOnClickShowPhotoFolderListener = new BGAOnNoDoubleClickListener() {
+
         @Override
         public void onNoDoubleClick(View v) {
             if (mPhotoFolderModels != null && mPhotoFolderModels.size() > 0) {
                 showPhotoFolderPw();
             }
         }
+
     };
 
     public static class IntentBuilder {
+
         private Intent mIntent;
 
         public IntentBuilder(Context context) {
@@ -132,9 +134,6 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
 
         /**
          * 图片选择张数的最大值
-         *
-         * @param maxChooseCount
-         * @return
          */
         public IntentBuilder maxChooseCount(int maxChooseCount) {
             mIntent.putExtra(EXTRA_MAX_CHOOSE_COUNT, maxChooseCount);
@@ -157,16 +156,22 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
             return this;
         }
 
+        /**
+         * 最多列数
+         */
+        public IntentBuilder spanCount(int spanCount) {
+            mIntent.putExtra(EXTRA_SPAN_COUNT, spanCount);
+            return this;
+        }
+
         public Intent build() {
             return mIntent;
         }
+
     }
 
     /**
      * 获取已选择的图片集合
-     *
-     * @param intent
-     * @return
      */
     public static ArrayList<String> getSelectedPhotos(Intent intent) {
         return intent.getStringArrayListExtra(EXTRA_SELECTED_PHOTOS);
@@ -205,7 +210,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
         // 获取右上角按钮文本
         mTopRightBtnText = getString(R.string.bga_pp_confirm);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, SPAN_COUNT, LinearLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, getIntent().getIntExtra(EXTRA_SPAN_COUNT, 4), LinearLayoutManager.VERTICAL, false);
         mContentRv.setLayoutManager(layoutManager);
         mContentRv.addItemDecoration(BGAGridDivider.newInstanceWithSpaceRes(R.dimen.bga_pp_size_photo_divider));
 
@@ -233,6 +238,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
             mLoadingDialog.setContentView(R.layout.bga_pp_dialog_loading);
             mLoadingDialog.setCancelable(false);
         }
+
         mLoadingDialog.show();
     }
 
@@ -273,8 +279,6 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
 
     /**
      * 返回已选中的图片集合
-     *
-     * @param selectedPhotos
      */
     private void returnSelectedPhotos(ArrayList<String> selectedPhotos) {
         Intent intent = new Intent();
@@ -328,7 +332,9 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
                         .selectedPhotos(photos)
                         .currentPosition(0)
                         .build();
+
                 startActivityForResult(photoPickerPreview, RC_PREVIEW);
+
             } else if (requestCode == RC_PREVIEW) {
                 if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {
                     // 从拍照预览界面返回，刷新图库
@@ -433,6 +439,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
                 .currentPosition(currentPosition)
                 .isFromTakePhoto(false)
                 .build();
+
         startActivityForResult(photoPickerPreviewIntent, RC_PREVIEW);
     }
 
@@ -443,9 +450,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
      */
     private void handleClickSelectFlagIv(int position) {
         String currentPhoto = mPicAdapter.getItem(position);
-        if (mMaxChooseCount == 1) {
-            // 单选
-
+        if (mMaxChooseCount == 1) {// 单选
             if (mPicAdapter.getSelectedCount() > 0) {
                 String selectedPhoto = mPicAdapter.getSelectedPhotos().remove(0);
                 if (TextUtils.equals(selectedPhoto, currentPhoto)) {
@@ -460,10 +465,10 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
                 mPicAdapter.getSelectedPhotos().add(currentPhoto);
                 mPicAdapter.notifyItemChanged(position);
             }
-            renderTopRightBtn();
-        } else {
-            // 多选
 
+            renderTopRightBtn();
+
+        } else {// 多选
             if (!mPicAdapter.getSelectedPhotos().contains(currentPhoto) && mPicAdapter.getSelectedCount() == mMaxChooseCount) {
                 toastMaxCountTip();
             } else {
@@ -515,7 +520,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
     protected void onDestroy() {
         dismissLoadingDialog();
         cancelLoadPhotoTask();
-
         super.onDestroy();
     }
+
 }

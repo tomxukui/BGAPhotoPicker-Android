@@ -186,6 +186,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
                     .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
                     .selectedPhotos(null) // 当前已选中的图片路径集合
                     .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
+                    .spanCount(4)
                     .build();
             startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
         } else {
