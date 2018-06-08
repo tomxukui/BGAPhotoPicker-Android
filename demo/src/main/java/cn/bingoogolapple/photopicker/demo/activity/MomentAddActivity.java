@@ -132,7 +132,8 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
 
     public void onClick(View v) {
         if (v.getId() == R.id.tv_moment_add_choice_photo) {
-            choicePhotoWrapper();
+            choicePhotoWrapper(null);
+
         } else if (v.getId() == R.id.tv_moment_add_publish) {
             String content = mContentEt.getText().toString().trim();
             if (content.length() == 0 && mPhotosSnpl.getItemCount() == 0) {
@@ -149,7 +150,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
 
     @Override
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
-        choicePhotoWrapper();
+        choicePhotoWrapper(models);
     }
 
     @Override
@@ -175,7 +176,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
     }
 
     @AfterPermissionGranted(PRC_PHOTO_PICKER)
-    private void choicePhotoWrapper() {
+    private void choicePhotoWrapper(ArrayList<String> models) {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
@@ -184,7 +185,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
             Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
                     .cameraFileDir(mTakePhotoCb.isChecked() ? takePhotoDir : null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
                     .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
-                    .selectedPhotos(null) // 当前已选中的图片路径集合
+                    .selectedPhotos(models) // 当前已选中的图片路径集合
                     .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
                     .spanCount(4)
                     .build();
