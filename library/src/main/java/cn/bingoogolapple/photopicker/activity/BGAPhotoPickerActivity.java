@@ -36,7 +36,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cn.bingoogolapple.baseadapter.BGAGridDivider;
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
@@ -48,6 +47,7 @@ import cn.bingoogolapple.photopicker.util.BGAAsyncTask;
 import cn.bingoogolapple.photopicker.util.BGAPhotoHelper;
 import cn.bingoogolapple.photopicker.util.BGALoadPhotoTask;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
+import cn.bingoogolapple.photopicker.widget.GridSpacingItemDecoration;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
@@ -212,7 +212,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, getIntent().getIntExtra(EXTRA_SPAN_COUNT, 4), LinearLayoutManager.VERTICAL, false);
         mContentRv.setLayoutManager(layoutManager);
-        mContentRv.addItemDecoration(BGAGridDivider.newInstanceWithSpaceRes(R.dimen.bga_pp_size_photo_divider));
+        mContentRv.addItemDecoration(new GridSpacingItemDecoration(layoutManager.getSpanCount(), (int) getResources().getDimension(R.dimen.bga_pp_size_photo_divider), false));
 
         ArrayList<String> selectedPhotos = getIntent().getStringArrayListExtra(EXTRA_SELECTED_PHOTOS);
         if (selectedPhotos != null && selectedPhotos.size() > mMaxChooseCount) {
