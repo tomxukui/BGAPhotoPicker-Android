@@ -44,6 +44,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * 描述:图片选择预览界面
  */
 public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implements PhotoViewAttacher.OnViewTapListener {
+
     private static final String EXTRA_PREVIEW_PHOTOS = "EXTRA_PREVIEW_PHOTOS";
     private static final String EXTRA_SELECTED_PHOTOS = "EXTRA_SELECTED_PHOTOS";
     private static final String EXTRA_MAX_CHOOSE_COUNT = "EXTRA_MAX_CHOOSE_COUNT";
