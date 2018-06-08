@@ -52,11 +52,6 @@
         <attr name="bga_igl_circle" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="BGAImagePickerGridLayout">
-        <attr name="bga_ipgl_space" format="dimension" />
-        <attr name="bga_ipgl_cornerRadius" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="BGANinePhotoLayout">
         <!-- Item 条目圆角尺寸，默认值为 0dp -->
         <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />

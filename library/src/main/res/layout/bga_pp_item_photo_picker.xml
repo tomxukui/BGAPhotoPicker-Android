@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bga_pp_photo_item_bg">
@@ -11,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        app:bga_npl_circle="false"
-        tools:src="@mipmap/bga_pp_ic_holder_dark" />
+        app:bga_iv_circle="false"
+        app:bga_iv_square="true" />
 
     <ImageView
         android:id="@+id/iv_item_photo_picker_flag"
