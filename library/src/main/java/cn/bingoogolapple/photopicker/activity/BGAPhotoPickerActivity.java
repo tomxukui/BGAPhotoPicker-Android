@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.activity;
 
 import android.content.Context;
@@ -55,6 +40,7 @@ import cn.bingoogolapple.photopicker.widget.GridSpacingItemDecoration;
  * 描述:图片选择界面
  */
 public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAOnItemChildClickListener, BGAAsyncTask.Callback<ArrayList<BGAPhotoFolderModel>> {
+
     private static final String EXTRA_CAMERA_FILE_DIR = "EXTRA_CAMERA_FILE_DIR";
     private static final String EXTRA_SELECTED_PHOTOS = "EXTRA_SELECTED_PHOTOS";
     private static final String EXTRA_MAX_CHOOSE_COUNT = "EXTRA_MAX_CHOOSE_COUNT";
@@ -273,7 +259,6 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
         }
 
         renderTopRightBtn();
-
         return true;
     }
 
