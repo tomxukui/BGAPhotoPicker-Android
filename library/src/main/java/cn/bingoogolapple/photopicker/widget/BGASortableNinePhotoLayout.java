@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.widget;
 
 import android.content.Context;
@@ -45,12 +30,8 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 
 import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_IDLE;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/7/8 下午4:51
- * 描述:拖拽排序九宫格图片控件
- */
 public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnItemChildClickListener, BGAOnRVItemClickListener {
+
     private PhotoAdapter mPhotoAdapter;
     private ItemTouchHelper mItemTouchHelper;
     private Delegate mDelegate;
@@ -379,7 +360,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
                 mDelegate.onClickAddNinePhotoItem(this, itemView, position, getData());
             }
         } else {
-            if (mDelegate != null && ViewCompat.getScaleX(itemView) <= 1.0f) {
+            if (mDelegate != null && itemView.getScaleX() <= 1.0f) {
                 mDelegate.onClickNinePhotoItem(this, itemView, position, mPhotoAdapter.getItem(position), getData());
             }
         }
@@ -409,6 +390,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     private class PhotoAdapter extends BGARecyclerViewAdapter<String> {
+
         private int mImageSize;
 
         public PhotoAdapter(RecyclerView recyclerView) {
@@ -523,8 +505,8 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
 
         @Override
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            ViewCompat.setScaleX(viewHolder.itemView, 1.0f);
-            ViewCompat.setScaleY(viewHolder.itemView, 1.0f);
+            viewHolder.itemView.setScaleX(1.0f);
+            viewHolder.itemView.setScaleY(1.0f);
             ((BGARecyclerViewHolder) viewHolder).getViewHolderHelper().getImageView(R.id.iv_item_nine_photo_photo).setColorFilter(null);
             super.clearView(recyclerView, viewHolder);
         }
