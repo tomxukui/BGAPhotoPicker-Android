@@ -65,10 +65,10 @@
         <attr name="bga_iv_borderColor" format="reference|color" />
     </declare-styleable>
 
-    <declare-styleable name="BGANineGridLayout">
-        <attr name="bga_ngl_space" format="dimension" />
-        <attr name="bga_ngl_placeholder" format="reference" />
-        <attr name="bga_ngl_cornerRadius" format="dimension" />
+    <declare-styleable name="BGAImageGridLayout">
+        <attr name="bga_igl_space" format="dimension" />
+        <attr name="bga_igl_placeholder" format="reference" />
+        <attr name="bga_igl_cornerRadius" format="dimension" />
     </declare-styleable>
 
 </resources>

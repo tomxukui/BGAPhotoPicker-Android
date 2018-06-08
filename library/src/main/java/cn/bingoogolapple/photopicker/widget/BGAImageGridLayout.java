@@ -5,9 +5,9 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import cn.bingoogolapple.baseadapter.BGABaseAdapterUtil;
 import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 
-public class BGANineGridLayout extends ViewGroup {
+public class BGAImageGridLayout extends ViewGroup {
 
     private int mSpace;
     private int mItemSize;
@@ -25,33 +25,31 @@ public class BGANineGridLayout extends ViewGroup {
     private int mCornerRadius;
     private int mOldNum;
     private List<String> mPhotos;
-    private LayoutInflater mInflater;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public BGANineGridLayout(Context context) {
+    public BGAImageGridLayout(Context context) {
         super(context);
         initData(context, null, 0);
     }
 
-    public BGANineGridLayout(Context context, AttributeSet attrs) {
+    public BGAImageGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context, attrs, 0);
     }
 
-    public BGANineGridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BGAImageGridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context, attrs, defStyleAttr);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public BGANineGridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BGAImageGridLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initData(context, attrs, defStyleAttr);
     }
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
-        mInflater = LayoutInflater.from(context);
         mSpace = BGABaseAdapterUtil.dp2px(10);
         mPlaceholder = 0;
         mCornerRadius = 0;
@@ -59,11 +57,11 @@ public class BGANineGridLayout extends ViewGroup {
         mOldNum = 0;
 
         if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BGANineGridLayout, defStyleAttr, 0);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BGAImageGridLayout, defStyleAttr, 0);
 
-            mSpace = ta.getDimensionPixelSize(R.styleable.BGANineGridLayout_bga_ngl_space, mSpace);
-            mPlaceholder = ta.getResourceId(R.styleable.BGANineGridLayout_bga_ngl_placeholder, mPlaceholder);
-            mCornerRadius = ta.getDimensionPixelSize(R.styleable.BGANineGridLayout_bga_ngl_cornerRadius, mCornerRadius);
+            mSpace = ta.getDimensionPixelSize(R.styleable.BGAImageGridLayout_bga_igl_space, mSpace);
+            mPlaceholder = ta.getResourceId(R.styleable.BGAImageGridLayout_bga_igl_placeholder, mPlaceholder);
+            mCornerRadius = ta.getDimensionPixelSize(R.styleable.BGAImageGridLayout_bga_igl_cornerRadius, mCornerRadius);
 
             ta.recycle();
         }
@@ -100,7 +98,6 @@ public class BGANineGridLayout extends ViewGroup {
                 final int position = i;
                 final String photo = mPhotos.get(i);
 
-                iv.setCornerRadius(mCornerRadius);
                 BGAImage.display(iv, mPlaceholder, photo, mItemSize);
                 iv.setOnClickListener(new OnClickListener() {
 
@@ -174,9 +171,11 @@ public class BGANineGridLayout extends ViewGroup {
     }
 
     private BGAImageView createItemView() {
-        View layout = mInflater.inflate(R.layout.bga_pp_item_layout_nine_grid, this, false);
-        BGAImageView iv_item_nine_grid_photo = layout.findViewById(R.id.iv_item_nine_grid_photo);
-        return iv_item_nine_grid_photo;
+        BGAImageView iv = new BGAImageView(getContext());
+        iv.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        iv.setCornerRadius(mCornerRadius);
+        return iv;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -184,9 +183,7 @@ public class BGANineGridLayout extends ViewGroup {
     }
 
     public interface OnItemClickListener {
-
         void onItemClick(BGAImageView view, int position, String photo, List<String> photos);
-
     }
 
 }

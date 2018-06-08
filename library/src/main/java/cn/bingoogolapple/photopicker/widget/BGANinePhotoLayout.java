@@ -22,7 +22,7 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 public class BGANinePhotoLayout extends FrameLayout {
 
     private BGAImageView mPhotoIv;
-    private BGANineGridLayout mPhotoGrid;
+    private BGAImageGridLayout mPhotoGrid;
 
     private Delegate mDelegate;
 
@@ -32,7 +32,7 @@ public class BGANinePhotoLayout extends FrameLayout {
     private int mItemWhiteSpacing;
     private int mPlaceholderDrawableResId;
 
-    private ArrayList<String> mPhotos;
+    private List<String> mPhotos;
     private int mCurrentClickItemPosition;
 
     public BGANinePhotoLayout(@NonNull Context context) {
@@ -96,11 +96,11 @@ public class BGANinePhotoLayout extends FrameLayout {
 
         });
 
-        mPhotoGrid = new BGANineGridLayout(getContext());
+        mPhotoGrid = new BGAImageGridLayout(getContext());
         mPhotoGrid.setCornerRadius(mItemCornerRadius);
         mPhotoGrid.setPlaceholder(mPlaceholderDrawableResId);
         mPhotoGrid.setSpace(mItemWhiteSpacing);
-        mPhotoGrid.setOnItemClickListener(new BGANineGridLayout.OnItemClickListener() {
+        mPhotoGrid.setOnItemClickListener(new BGAImageGridLayout.OnItemClickListener() {
 
             @Override
             public void onItemClick(BGAImageView view, int position, String photo, List<String> photos) {
@@ -122,7 +122,7 @@ public class BGANinePhotoLayout extends FrameLayout {
      *
      * @param photos
      */
-    public void setData(ArrayList<String> photos) {
+    public void setData(List<String> photos) {
         mPhotos = (photos == null ? new ArrayList<String>() : photos);
 
         if (mPhotos.size() == 0) {
@@ -157,7 +157,7 @@ public class BGANinePhotoLayout extends FrameLayout {
         mDelegate = delegate;
     }
 
-    public ArrayList<String> getData() {
+    public List<String> getData() {
         return mPhotos == null ? new ArrayList<String>() : mPhotos;
     }
 

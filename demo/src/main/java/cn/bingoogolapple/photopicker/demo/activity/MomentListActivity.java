@@ -139,7 +139,7 @@ public class MomentListActivity extends BGAPPToolbarActivity implements EasyPerm
                 photoPreviewIntentBuilder.previewPhoto(mCurrentClickNpl.getCurrentClickItem());
             } else if (mCurrentClickNpl.getCount() > 1) {
                 // 预览多张图片
-                photoPreviewIntentBuilder.previewPhotos(mCurrentClickNpl.getData())
+                photoPreviewIntentBuilder.previewPhotos((ArrayList<String>) mCurrentClickNpl.getData())
                         .currentPosition(mCurrentClickNpl.getCurrentClickItemPosition()); // 当前预览图片的索引
             }
             startActivity(photoPreviewIntentBuilder.build());
