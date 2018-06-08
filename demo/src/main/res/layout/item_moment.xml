@@ -43,10 +43,7 @@
         android:layout_toRightOf="@id/iv_item_moment_avatar"
         app:bga_npl_circle="true"
         app:bga_npl_itemCornerRadius="0dp"
-        app:bga_npl_itemSpanCount="3"
-        app:bga_npl_itemWhiteSpacing="4dp"
-        app:bga_npl_itemWidth="0dp"
-        app:bga_npl_otherWhiteSpacing="64dp"
+        app:bga_npl_itemWhiteSpacing="2dp"
         app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
         app:bga_npl_radioWhenOnlyOne="0.6"
         app:bga_npl_showAsLargeWhenOnlyOne="true" />

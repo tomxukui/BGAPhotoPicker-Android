@@ -90,21 +90,21 @@ public class BGANinePhotoLayout2 extends FrameLayout implements AdapterView.OnIt
     }
 
     private void initCustomAttr(int attr, TypedArray typedArray) {
-        if (attr == R.styleable.BGANinePhotoLayout_bga_npl_showAsLargeWhenOnlyOne) {
-            mShowAsLargeWhenOnlyOne = typedArray.getBoolean(attr, mShowAsLargeWhenOnlyOne);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemCornerRadius) {
-            mItemCornerRadius = typedArray.getDimensionPixelSize(attr, mItemCornerRadius);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing) {
-            mItemWhiteSpacing = typedArray.getDimensionPixelSize(attr, mItemWhiteSpacing);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_otherWhiteSpacing) {
-            mOtherWhiteSpacing = typedArray.getDimensionPixelOffset(attr, mOtherWhiteSpacing);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable) {
-            mPlaceholderDrawableResId = typedArray.getResourceId(attr, mPlaceholderDrawableResId);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWidth) {
-            mItemWidth = typedArray.getDimensionPixelSize(attr, mItemWidth);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemSpanCount) {
-            mItemSpanCount = typedArray.getInteger(attr, mItemSpanCount);
-        }
+//        if (attr == R.styleable.BGANinePhotoLayout_bga_npl_showAsLargeWhenOnlyOne) {
+//            mShowAsLargeWhenOnlyOne = typedArray.getBoolean(attr, mShowAsLargeWhenOnlyOne);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemCornerRadius) {
+//            mItemCornerRadius = typedArray.getDimensionPixelSize(attr, mItemCornerRadius);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing) {
+//            mItemWhiteSpacing = typedArray.getDimensionPixelSize(attr, mItemWhiteSpacing);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_otherWhiteSpacing) {
+//            mOtherWhiteSpacing = typedArray.getDimensionPixelOffset(attr, mOtherWhiteSpacing);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable) {
+//            mPlaceholderDrawableResId = typedArray.getResourceId(attr, mPlaceholderDrawableResId);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWidth) {
+//            mItemWidth = typedArray.getDimensionPixelSize(attr, mItemWidth);
+//        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemSpanCount) {
+//            mItemSpanCount = typedArray.getInteger(attr, mItemSpanCount);
+//        }
     }
 
     private void afterInitDefaultAndCustomAttrs() {

@@ -30,26 +30,26 @@
         <attr name="bga_snpl_itemWidth" format="dimension|reference" />
     </declare-styleable>
 
-    <declare-styleable name="BGANinePhotoLayout">
-        <!-- Item 条目圆角尺寸，默认值为 0dp -->
-        <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />
-        <!-- 当只有一张图片时，是否显示成大图，默认值为 true -->
-        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />
-        <!-- Item 间的水平和垂直间距，默认值为 4dp -->
-        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />
-        <!-- 出去九宫格部分的空白区域的尺寸，默认值为 100dp -->
-        <attr name="bga_npl_otherWhiteSpacing" format="dimension|reference" />
-        <!-- 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light -->
-        <attr name="bga_npl_placeholderDrawable" format="reference" />
-        <!-- item 的尺寸，优先级高于 bga_npl_otherWhiteSpacing，默认值为 0dp -->
-        <attr name="bga_npl_itemWidth" format="dimension|reference" />
-        <!-- 列数,默认值为 3，当该值大于 3 并且数据源里只有四张图片时不会显示成 2 列 -->
-        <attr name="bga_npl_itemSpanCount" format="integer" />
+    <!--<declare-styleable name="BGANinePhotoLayout">-->
+    <!--&lt;!&ndash; Item 条目圆角尺寸，默认值为 0dp &ndash;&gt;-->
+    <!--<attr name="bga_npl_itemCornerRadius" format="dimension|reference" />-->
+    <!--&lt;!&ndash; 当只有一张图片时，是否显示成大图，默认值为 true &ndash;&gt;-->
+    <!--<attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />-->
+    <!--&lt;!&ndash; Item 间的水平和垂直间距，默认值为 4dp &ndash;&gt;-->
+    <!--<attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />-->
+    <!--&lt;!&ndash; 出去九宫格部分的空白区域的尺寸，默认值为 100dp &ndash;&gt;-->
+    <!--<attr name="bga_npl_otherWhiteSpacing" format="dimension|reference" />-->
+    <!--&lt;!&ndash; 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light &ndash;&gt;-->
+    <!--<attr name="bga_npl_placeholderDrawable" format="reference" />-->
+    <!--&lt;!&ndash; item 的尺寸，优先级高于 bga_npl_otherWhiteSpacing，默认值为 0dp &ndash;&gt;-->
+    <!--<attr name="bga_npl_itemWidth" format="dimension|reference" />-->
+    <!--&lt;!&ndash; 列数,默认值为 3，当该值大于 3 并且数据源里只有四张图片时不会显示成 2 列 &ndash;&gt;-->
+    <!--<attr name="bga_npl_itemSpanCount" format="integer" />-->
 
 
-        <attr name="bga_npl_radioWhenOnlyOne" format="float" />
-        <attr name="bga_npl_circle" format="boolean" />
-    </declare-styleable>
+    <!--<attr name="bga_npl_radioWhenOnlyOne" format="float" />-->
+    <!--<attr name="bga_npl_circle" format="boolean" />-->
+    <!--</declare-styleable>-->
 
     <declare-styleable name="BGAImageView">
         <!-- 默认图片资源，默认值为 null -->
@@ -69,6 +69,21 @@
         <attr name="bga_igl_placeholder" format="reference" />
         <attr name="bga_igl_cornerRadius" format="dimension" />
         <attr name="bga_igl_circle" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BGANinePhotoLayout">
+        <!-- Item 条目圆角尺寸，默认值为 0dp -->
+        <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />
+        <!-- 当只有一张图片时，是否显示成大图，默认值为 true -->
+        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />
+        <!-- Item 间的水平和垂直间距，默认值为 4dp -->
+        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />
+        <!-- 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light -->
+        <attr name="bga_npl_placeholderDrawable" format="reference" />
+        <!-- 当只有一张图片并且显示大图时，大图的宽度占屏幕宽度的比例 -->
+        <attr name="bga_npl_radioWhenOnlyOne" format="float" />
+        <!--图片是否是圆形-->
+        <attr name="bga_npl_circle" format="boolean" />
     </declare-styleable>
 
 </resources>
