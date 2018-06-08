@@ -69,4 +69,5 @@ public abstract class BGAImageLoader {
 
         void onFailed(String path);
     }
+
 }

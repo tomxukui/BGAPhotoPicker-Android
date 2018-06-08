@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
  * 描述:
  */
 public class BGARVOnScrollListener extends RecyclerView.OnScrollListener {
+
     private Activity mActivity;
 
     public BGARVOnScrollListener(Activity activity) {
@@ -38,4 +39,5 @@ public class BGARVOnScrollListener extends RecyclerView.OnScrollListener {
             BGAImage.pause(mActivity);
         }
     }
+
 }
