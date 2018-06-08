@@ -35,6 +35,8 @@
         <attr name="android:src" />
         <!-- 是否是圆形，默认值为 false -->
         <attr name="bga_iv_circle" format="boolean" />
+        <!-- 是否是正方形，默认值为 false -->
+        <attr name="bga_iv_square" format="boolean" />
         <!-- 圆角矩形的半径，默认值为 0dp -->
         <attr name="bga_iv_cornerRadius" format="reference|dimension" />
         <!-- 描边的宽度，默认值为 0dp -->

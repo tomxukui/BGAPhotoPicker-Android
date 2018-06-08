@@ -23,6 +23,7 @@ public class BGAImageView extends AppCompatImageView {
     private int mDefaultImageId;
     private int mCornerRadius;
     private boolean mCircle;
+    private boolean mSquare;
     private int mBorderWidth;
     private int mBorderColor;
 
@@ -50,6 +51,7 @@ public class BGAImageView extends AppCompatImageView {
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mCircle = false;
+        mSquare = false;
         mDefaultImageId = 0;
         mCornerRadius = 0;
         mBorderWidth = 0;
@@ -59,6 +61,7 @@ public class BGAImageView extends AppCompatImageView {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BGAImageView, defStyleAttr, 0);
 
             mCircle = ta.getBoolean(R.styleable.BGAImageView_bga_iv_circle, mCircle);
+            mSquare = ta.getBoolean(R.styleable.BGAImageView_bga_iv_square, mSquare);
             mDefaultImageId = ta.getResourceId(R.styleable.BGAImageView_android_src, mDefaultImageId);
             mCornerRadius = ta.getDimensionPixelSize(R.styleable.BGAImageView_bga_iv_cornerRadius, mCornerRadius);
             mBorderWidth = ta.getDimensionPixelSize(R.styleable.BGAImageView_bga_iv_borderWidth, mBorderWidth);
@@ -114,9 +117,11 @@ public class BGAImageView extends AppCompatImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
-        int childWidthSize = getMeasuredWidth();
-        heightMeasureSpec = widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(childWidthSize, View.MeasureSpec.EXACTLY);
+        if (mCircle || mSquare) {
+            setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
+            int childWidthSize = getMeasuredWidth();
+            heightMeasureSpec = widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(childWidthSize, View.MeasureSpec.EXACTLY);
+        }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -140,6 +145,10 @@ public class BGAImageView extends AppCompatImageView {
 
     public void setCircle(boolean circle) {
         mCircle = circle;
+    }
+
+    public void setSquare(boolean square) {
+        mSquare = square;
     }
 
     public void setDelegate(Delegate delegate) {

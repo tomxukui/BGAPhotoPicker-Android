@@ -183,6 +183,7 @@ public class BGAImageGridLayout extends ViewGroup {
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         iv.setCornerRadius(mCornerRadius);
         iv.setCircle(mCircle);
+        iv.setSquare(!mCircle);
         return iv;
     }
 
