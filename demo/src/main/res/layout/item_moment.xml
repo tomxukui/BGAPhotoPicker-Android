@@ -41,7 +41,7 @@
         android:layout_below="@id/tv_item_moment_content"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/iv_item_moment_avatar"
-        app:bga_npl_circle="false"
+        app:bga_npl_circle="true"
         app:bga_npl_itemCornerRadius="0dp"
         app:bga_npl_itemSpanCount="3"
         app:bga_npl_itemWhiteSpacing="4dp"
