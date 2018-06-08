@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.widget;
 
 import android.content.Context;
@@ -20,40 +5,31 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGABaseAdapterUtil;
-import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/7/8 下午2:41
- * 描述:九宫格图片控件
- */
-public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnItemClickListener, View.OnClickListener {
-    private static final int ITEM_NUM_COLUMNS = 3;
-    private PhotoAdapter mPhotoAdapter;
+public class BGANinePhotoLayout extends FrameLayout {
+
     private BGAImageView mPhotoIv;
-    private BGAHeightWrapGridView mPhotoGv;
+    private BGANineGridLayout mPhotoGrid;
+
     private Delegate mDelegate;
-    private int mCurrentClickItemPosition;
 
     private int mItemCornerRadius;
     private boolean mShowAsLargeWhenOnlyOne;
+    private float mRadioWhenOnlyOne;
     private int mItemWhiteSpacing;
-    private int mOtherWhiteSpacing;
     private int mPlaceholderDrawableResId;
-    private int mItemSpanCount;
 
-    private int mItemWidth;
+    private ArrayList<String> mPhotos;
+    private int mCurrentClickItemPosition;
 
     public BGANinePhotoLayout(Context context) {
         this(context, null);
@@ -71,13 +47,11 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
     }
 
     private void initDefaultAttrs() {
-        mItemWidth = 0;
         mShowAsLargeWhenOnlyOne = true;
         mItemCornerRadius = 0;
         mItemWhiteSpacing = BGABaseAdapterUtil.dp2px(4);
         mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_light;
-        mOtherWhiteSpacing = BGABaseAdapterUtil.dp2px(100);
-        mItemSpanCount = 3;
+        mRadioWhenOnlyOne = 0.6f;
     }
 
     private void initCustomAttrs(Context context, AttributeSet attrs) {
@@ -96,52 +70,48 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
             mItemCornerRadius = typedArray.getDimensionPixelSize(attr, mItemCornerRadius);
         } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing) {
             mItemWhiteSpacing = typedArray.getDimensionPixelSize(attr, mItemWhiteSpacing);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_otherWhiteSpacing) {
-            mOtherWhiteSpacing = typedArray.getDimensionPixelOffset(attr, mOtherWhiteSpacing);
         } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable) {
             mPlaceholderDrawableResId = typedArray.getResourceId(attr, mPlaceholderDrawableResId);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWidth) {
-            mItemWidth = typedArray.getDimensionPixelSize(attr, mItemWidth);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemSpanCount) {
-            mItemSpanCount = typedArray.getInteger(attr, mItemSpanCount);
+        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_radioWhenOnlyOne) {
+            mRadioWhenOnlyOne = typedArray.getFloat(attr, mRadioWhenOnlyOne);
         }
     }
 
     private void afterInitDefaultAndCustomAttrs() {
-        if (mItemWidth == 0) {
-            mItemWidth = (BGAPhotoPickerUtil.getScreenWidth() - mOtherWhiteSpacing - (mItemSpanCount - 1) * mItemWhiteSpacing) / mItemSpanCount;
-        }
-
         mPhotoIv = new BGAImageView(getContext());
         mPhotoIv.setClickable(true);
-        mPhotoIv.setOnClickListener(this);
+        mPhotoIv.setOnClickListener(new OnClickListener() {
 
-        mPhotoGv = new BGAHeightWrapGridView(getContext());
-        mPhotoGv.setHorizontalSpacing(mItemWhiteSpacing);
-        mPhotoGv.setVerticalSpacing(mItemWhiteSpacing);
-        mPhotoGv.setNumColumns(ITEM_NUM_COLUMNS);
-        mPhotoGv.setOnItemClickListener(this);
-        mPhotoAdapter = new PhotoAdapter(getContext());
-        mPhotoGv.setAdapter(mPhotoAdapter);
+            @Override
+            public void onClick(View v) {
+                mCurrentClickItemPosition = 0;
+
+                if (mDelegate != null) {
+                    mDelegate.onClickNinePhotoItem(BGANinePhotoLayout.this, v, mCurrentClickItemPosition, mPhotos.get(mCurrentClickItemPosition), mPhotos);
+                }
+            }
+
+        });
+
+        mPhotoGrid = new BGANineGridLayout(getContext());
+        mPhotoGrid.setCornerRadius(mItemCornerRadius);
+        mPhotoGrid.setPlaceholder(mPlaceholderDrawableResId);
+        mPhotoGrid.setSpace(mItemWhiteSpacing);
+        mPhotoGrid.setOnItemClickListener(new BGANineGridLayout.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(BGAImageView view, int position, String photo, List<String> photos) {
+                mCurrentClickItemPosition = position;
+
+                if (mDelegate != null) {
+                    mDelegate.onClickNinePhotoItem(BGANinePhotoLayout.this, view, mCurrentClickItemPosition, mPhotos.get(mCurrentClickItemPosition), mPhotos);
+                }
+            }
+
+        });
 
         addView(mPhotoIv, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        addView(mPhotoGv);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        mCurrentClickItemPosition = position;
-        if (mDelegate != null) {
-            mDelegate.onClickNinePhotoItem(this, view, mCurrentClickItemPosition, mPhotoAdapter.getItem(mCurrentClickItemPosition), mPhotoAdapter.getData());
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        mCurrentClickItemPosition = 0;
-        if (mDelegate != null) {
-            mDelegate.onClickNinePhotoItem(this, view, mCurrentClickItemPosition, mPhotoAdapter.getItem(mCurrentClickItemPosition), mPhotoAdapter.getData());
-        }
+        addView(mPhotoGrid, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     /**
@@ -150,17 +120,19 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
      * @param photos
      */
     public void setData(ArrayList<String> photos) {
-        if (photos.size() == 0) {
+        mPhotos = (photos == null ? new ArrayList<String>() : photos);
+
+        if (mPhotos.size() == 0) {
             setVisibility(GONE);
+
         } else {
             setVisibility(VISIBLE);
 
             if (photos.size() == 1 && mShowAsLargeWhenOnlyOne) {
-                mPhotoGv.setVisibility(GONE);
-                mPhotoAdapter.setData(photos);
+                mPhotoGrid.setVisibility(GONE);
                 mPhotoIv.setVisibility(VISIBLE);
 
-                int size = mItemWidth * 2 + mItemWhiteSpacing + mItemWidth / 4;
+                int size = (int) (BGAPhotoPickerUtil.getScreenWidth() * mRadioWhenOnlyOne);
                 mPhotoIv.setMaxWidth(size);
                 mPhotoIv.setMaxHeight(size);
 
@@ -169,33 +141,11 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
                 }
 
                 BGAImage.display(mPhotoIv, mPlaceholderDrawableResId, photos.get(0), size);
+
             } else {
                 mPhotoIv.setVisibility(GONE);
-                mPhotoGv.setVisibility(VISIBLE);
-                ViewGroup.LayoutParams layoutParams = mPhotoGv.getLayoutParams();
-
-                if (mItemSpanCount > 3) {
-                    int itemSpanCount = photos.size() < mItemSpanCount ? photos.size() : mItemSpanCount;
-                    mPhotoGv.setNumColumns(itemSpanCount);
-                    layoutParams.width = mItemWidth * itemSpanCount + (itemSpanCount - 1) * mItemWhiteSpacing;
-                } else {
-                    if (photos.size() == 1) {
-                        mPhotoGv.setNumColumns(1);
-                        layoutParams.width = mItemWidth * 1;
-                    } else if (photos.size() == 2) {
-                        mPhotoGv.setNumColumns(2);
-                        layoutParams.width = mItemWidth * 2 + mItemWhiteSpacing;
-                    } else if (photos.size() == 4) {
-                        mPhotoGv.setNumColumns(2);
-                        layoutParams.width = mItemWidth * 2 + mItemWhiteSpacing;
-                    } else {
-                        mPhotoGv.setNumColumns(3);
-                        layoutParams.width = mItemWidth * 3 + 2 * mItemWhiteSpacing;
-                    }
-                }
-
-                mPhotoGv.setLayoutParams(layoutParams);
-                mPhotoAdapter.setData(photos);
+                mPhotoGrid.setVisibility(VISIBLE);
+                mPhotoGrid.setData(photos);
             }
         }
     }
@@ -205,41 +155,23 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
     }
 
     public ArrayList<String> getData() {
-        return (ArrayList<String>) mPhotoAdapter.getData();
+        return mPhotos == null ? new ArrayList<String>() : mPhotos;
     }
 
-    public int getItemCount() {
-        return mPhotoAdapter.getCount();
+    public int getCount() {
+        return getData().size();
     }
 
     public String getCurrentClickItem() {
-        return mPhotoAdapter.getItem(mCurrentClickItemPosition);
+        return getData().get(mCurrentClickItemPosition);
     }
 
     public int getCurrentClickItemPosition() {
         return mCurrentClickItemPosition;
     }
 
-    private class PhotoAdapter extends BGAAdapterViewAdapter<String> {
-        private int mImageSize;
-
-        public PhotoAdapter(Context context) {
-            super(context, R.layout.bga_pp_item_nine_photo);
-            mImageSize = BGAPhotoPickerUtil.getScreenWidth() / (mItemSpanCount > 3 ? 8 : 6);
-        }
-
-        @Override
-        protected void fillData(BGAViewHolderHelper helper, int position, String model) {
-            if (mItemCornerRadius > 0) {
-                BGAImageView imageView = helper.getView(R.id.iv_item_nine_photo_photo);
-                imageView.setCornerRadius(mItemCornerRadius);
-            }
-
-            BGAImage.display(helper.getImageView(R.id.iv_item_nine_photo_photo), mPlaceholderDrawableResId, model, mImageSize);
-        }
-    }
-
     public interface Delegate {
         void onClickNinePhotoItem(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models);
     }
+
 }

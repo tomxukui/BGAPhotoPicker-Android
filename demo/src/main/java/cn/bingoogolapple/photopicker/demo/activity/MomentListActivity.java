@@ -134,10 +134,10 @@ public class MomentListActivity extends BGAPPToolbarActivity implements EasyPerm
             BGAPhotoPreviewActivity.IntentBuilder photoPreviewIntentBuilder = new BGAPhotoPreviewActivity.IntentBuilder(this)
                     .saveImgDir(downloadDir); // 保存图片的目录，如果传 null，则没有保存图片功能
 
-            if (mCurrentClickNpl.getItemCount() == 1) {
+            if (mCurrentClickNpl.getCount() == 1) {
                 // 预览单张图片
                 photoPreviewIntentBuilder.previewPhoto(mCurrentClickNpl.getCurrentClickItem());
-            } else if (mCurrentClickNpl.getItemCount() > 1) {
+            } else if (mCurrentClickNpl.getCount() > 1) {
                 // 预览多张图片
                 photoPreviewIntentBuilder.previewPhotos(mCurrentClickNpl.getData())
                         .currentPosition(mCurrentClickNpl.getCurrentClickItemPosition()); // 当前预览图片的索引
