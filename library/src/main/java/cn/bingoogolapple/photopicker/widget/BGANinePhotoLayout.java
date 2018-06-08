@@ -2,6 +2,10 @@ package cn.bingoogolapple.photopicker.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,53 +35,52 @@ public class BGANinePhotoLayout extends FrameLayout {
     private ArrayList<String> mPhotos;
     private int mCurrentClickItemPosition;
 
-    public BGANinePhotoLayout(Context context) {
-        this(context, null);
+    public BGANinePhotoLayout(@NonNull Context context) {
+        super(context);
+        initData(context, null, 0);
+        initView();
     }
 
-    public BGANinePhotoLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public BGANinePhotoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initData(context, attrs, 0);
+        initView();
     }
 
-    public BGANinePhotoLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BGANinePhotoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initDefaultAttrs();
-        initCustomAttrs(context, attrs);
-        afterInitDefaultAndCustomAttrs();
+        initData(context, attrs, defStyleAttr);
+        initView();
     }
 
-    private void initDefaultAttrs() {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public BGANinePhotoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initData(context, attrs, defStyleAttr);
+        initView();
+    }
+
+    private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mShowAsLargeWhenOnlyOne = true;
         mItemCornerRadius = 0;
         mItemWhiteSpacing = BGABaseAdapterUtil.dp2px(4);
         mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_light;
         mRadioWhenOnlyOne = 0.6f;
-    }
 
-    private void initCustomAttrs(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BGANinePhotoLayout);
-        final int N = typedArray.getIndexCount();
-        for (int i = 0; i < N; i++) {
-            initCustomAttr(typedArray.getIndex(i), typedArray);
-        }
-        typedArray.recycle();
-    }
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BGANinePhotoLayout, defStyleAttr, 0);
 
-    private void initCustomAttr(int attr, TypedArray typedArray) {
-        if (attr == R.styleable.BGANinePhotoLayout_bga_npl_showAsLargeWhenOnlyOne) {
-            mShowAsLargeWhenOnlyOne = typedArray.getBoolean(attr, mShowAsLargeWhenOnlyOne);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemCornerRadius) {
-            mItemCornerRadius = typedArray.getDimensionPixelSize(attr, mItemCornerRadius);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing) {
-            mItemWhiteSpacing = typedArray.getDimensionPixelSize(attr, mItemWhiteSpacing);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable) {
-            mPlaceholderDrawableResId = typedArray.getResourceId(attr, mPlaceholderDrawableResId);
-        } else if (attr == R.styleable.BGANinePhotoLayout_bga_npl_radioWhenOnlyOne) {
-            mRadioWhenOnlyOne = typedArray.getFloat(attr, mRadioWhenOnlyOne);
+            mShowAsLargeWhenOnlyOne = ta.getBoolean(R.styleable.BGANinePhotoLayout_bga_npl_showAsLargeWhenOnlyOne, mShowAsLargeWhenOnlyOne);
+            mItemCornerRadius = ta.getDimensionPixelSize(R.styleable.BGANinePhotoLayout_bga_npl_itemCornerRadius, mItemCornerRadius);
+            mItemWhiteSpacing = ta.getDimensionPixelSize(R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing, mItemWhiteSpacing);
+            mPlaceholderDrawableResId = ta.getResourceId(R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable, mPlaceholderDrawableResId);
+            mRadioWhenOnlyOne = ta.getFloat(R.styleable.BGANinePhotoLayout_bga_npl_radioWhenOnlyOne, mRadioWhenOnlyOne);
+
+            ta.recycle();
         }
     }
 
-    private void afterInitDefaultAndCustomAttrs() {
+    private void initView() {
         mPhotoIv = new BGAImageView(getContext());
         mPhotoIv.setClickable(true);
         mPhotoIv.setOnClickListener(new OnClickListener() {
