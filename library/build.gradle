@@ -13,10 +13,6 @@ android {
         versionName '2.0.6'
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     lintOptions {
         abortOnError false
     }
