@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:src="@mipmap/bga_pp_ic_camera"
-        app:bga_iv_square="true" />
+        app:bga_npl_circle="false" />
 
 </RelativeLayout>

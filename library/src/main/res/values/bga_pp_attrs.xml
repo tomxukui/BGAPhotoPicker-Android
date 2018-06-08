@@ -48,6 +48,7 @@
 
 
         <attr name="bga_npl_radioWhenOnlyOne" format="float" />
+        <attr name="bga_npl_circle" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="BGAImageView">
@@ -57,8 +58,6 @@
         <attr name="bga_iv_circle" format="boolean" />
         <!-- 圆角矩形的半径，默认值为 0dp -->
         <attr name="bga_iv_cornerRadius" format="reference|dimension" />
-        <!-- 是否是矩形，默认值为 false -->
-        <attr name="bga_iv_square" format="boolean" />
         <!-- 描边的宽度，默认值为 0dp -->
         <attr name="bga_iv_borderWidth" format="reference|dimension" />
         <!-- 描边的颜色，默认值为 Color.WHITE -->
@@ -69,6 +68,7 @@
         <attr name="bga_igl_space" format="dimension" />
         <attr name="bga_igl_placeholder" format="reference" />
         <attr name="bga_igl_cornerRadius" format="dimension" />
+        <attr name="bga_igl_circle" format="boolean" />
     </declare-styleable>
 
 </resources>

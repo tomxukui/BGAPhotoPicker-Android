@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class BGANinePhotoLayout extends FrameLayout {
     private float mRadioWhenOnlyOne;
     private int mItemWhiteSpacing;
     private int mPlaceholderDrawableResId;
+    private boolean mCircle;
+    private int mLargeMaxSize;
 
     private List<String> mPhotos;
     private int mCurrentClickItemPosition;
@@ -75,13 +78,21 @@ public class BGANinePhotoLayout extends FrameLayout {
             mItemWhiteSpacing = ta.getDimensionPixelSize(R.styleable.BGANinePhotoLayout_bga_npl_itemWhiteSpacing, mItemWhiteSpacing);
             mPlaceholderDrawableResId = ta.getResourceId(R.styleable.BGANinePhotoLayout_bga_npl_placeholderDrawable, mPlaceholderDrawableResId);
             mRadioWhenOnlyOne = ta.getFloat(R.styleable.BGANinePhotoLayout_bga_npl_radioWhenOnlyOne, mRadioWhenOnlyOne);
+            mCircle = ta.getBoolean(R.styleable.BGANinePhotoLayout_bga_npl_circle, mCircle);
 
             ta.recycle();
         }
+
+        mLargeMaxSize = (int) (BGAPhotoPickerUtil.getScreenWidth() * mRadioWhenOnlyOne);
     }
 
     private void initView() {
         mPhotoIv = new BGAImageView(getContext());
+        mPhotoIv.setCircle(mCircle);
+        mPhotoIv.setCornerRadius(mItemCornerRadius);
+        mPhotoIv.setMaxWidth(mLargeMaxSize);
+        mPhotoIv.setMaxHeight(mLargeMaxSize);
+        mPhotoIv.setScaleType(ImageView.ScaleType.CENTER);
         mPhotoIv.setClickable(true);
         mPhotoIv.setOnClickListener(new OnClickListener() {
 
@@ -97,6 +108,7 @@ public class BGANinePhotoLayout extends FrameLayout {
         });
 
         mPhotoGrid = new BGAImageGridLayout(getContext());
+        mPhotoGrid.setCircle(mCircle);
         mPhotoGrid.setCornerRadius(mItemCornerRadius);
         mPhotoGrid.setPlaceholder(mPlaceholderDrawableResId);
         mPhotoGrid.setSpace(mItemWhiteSpacing);
@@ -135,15 +147,7 @@ public class BGANinePhotoLayout extends FrameLayout {
                 mPhotoGrid.setVisibility(GONE);
                 mPhotoIv.setVisibility(VISIBLE);
 
-                int size = (int) (BGAPhotoPickerUtil.getScreenWidth() * mRadioWhenOnlyOne);
-                mPhotoIv.setMaxWidth(size);
-                mPhotoIv.setMaxHeight(size);
-
-                if (mItemCornerRadius > 0) {
-                    mPhotoIv.setCornerRadius(mItemCornerRadius);
-                }
-
-                BGAImage.display(mPhotoIv, mPlaceholderDrawableResId, photos.get(0), size);
+                BGAImage.display(mPhotoIv, mPlaceholderDrawableResId, photos.get(0), mLargeMaxSize);
 
             } else {
                 mPhotoIv.setVisibility(GONE);

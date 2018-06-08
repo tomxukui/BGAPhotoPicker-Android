@@ -23,6 +23,8 @@ public class BGAImageGridLayout extends ViewGroup {
     private int mRow;
     private int mPlaceholder;
     private int mCornerRadius;
+    private boolean mCircle;
+
     private int mOldNum;
     private List<String> mPhotos;
 
@@ -62,6 +64,7 @@ public class BGAImageGridLayout extends ViewGroup {
             mSpace = ta.getDimensionPixelSize(R.styleable.BGAImageGridLayout_bga_igl_space, mSpace);
             mPlaceholder = ta.getResourceId(R.styleable.BGAImageGridLayout_bga_igl_placeholder, mPlaceholder);
             mCornerRadius = ta.getDimensionPixelSize(R.styleable.BGAImageGridLayout_bga_igl_cornerRadius, mCornerRadius);
+            mCircle = ta.getBoolean(R.styleable.BGAImageGridLayout_bga_igl_circle, mCircle);
 
             ta.recycle();
         }
@@ -127,6 +130,10 @@ public class BGAImageGridLayout extends ViewGroup {
         }
     }
 
+    public void setCircle(boolean circle) {
+        mCircle = circle;
+    }
+
     public void setData(List<String> photos) {
         mPhotos.clear();
         if (photos != null) {
@@ -175,6 +182,7 @@ public class BGAImageGridLayout extends ViewGroup {
         iv.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         iv.setCornerRadius(mCornerRadius);
+        iv.setCircle(mCircle);
         return iv;
     }
 
