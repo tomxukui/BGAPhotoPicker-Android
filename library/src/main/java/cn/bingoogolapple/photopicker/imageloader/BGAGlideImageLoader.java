@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +32,7 @@ public class BGAGlideImageLoader extends BGAImageLoader {
         final String finalPath = getPath(path);
         Activity activity = getActivity(imageView);
 
-        if (isOk(activity)) {
+        if (isAndroidLifeOk(activity)) {
             Glide.with(activity)
                     .load(finalPath)
                     .apply(new RequestOptions().placeholder(loadingResId).error(failResId).override(width, height).dontAnimate())
@@ -81,21 +82,24 @@ public class BGAGlideImageLoader extends BGAImageLoader {
         }
     }
 
-    private boolean isOk(Activity activity) {
-        return activity != null && !activity.isFinishing();
-    }
-
     @Override
     public void pause(Activity activity) {
-        if (isOk(activity)) {
+        if (isAndroidLifeOk(activity)) {
             Glide.with(activity).pauseRequests();
         }
     }
 
     @Override
     public void resume(Activity activity) {
-        if (isOk(activity)) {
+        if (isAndroidLifeOk(activity)) {
             Glide.with(activity).resumeRequestsRecursive();
+        }
+    }
+
+    @Override
+    public void clear(Activity activity, View view) {
+        if (isAndroidLifeOk(activity) && view != null) {
+            Glide.with(activity).clear(view);
         }
     }
 

@@ -202,4 +202,5 @@ public class MomentListActivity extends BGAPPToolbarActivity implements EasyPerm
             ninePhotoLayout.setData(moment.photos);
         }
     }
+
 }

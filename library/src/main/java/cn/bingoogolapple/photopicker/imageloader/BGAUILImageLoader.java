@@ -72,6 +72,7 @@ public class BGAUILImageLoader extends BGAImageLoader {
         initImageLoader();
 
         ImageLoader.getInstance().loadImage(getPath(path), new SimpleImageLoadingListener() {
+
             @Override
             public void onLoadingComplete(String imageUri, View view, final Bitmap loadedImage) {
                 if (delegate != null) {
@@ -85,6 +86,7 @@ public class BGAUILImageLoader extends BGAImageLoader {
                     delegate.onFailed(imageUri);
                 }
             }
+
         });
     }
 
@@ -99,4 +101,9 @@ public class BGAUILImageLoader extends BGAImageLoader {
         initImageLoader();
         ImageLoader.getInstance().resume();
     }
+
+    @Override
+    public void clear(Activity activity, View view) {
+    }
+
 }

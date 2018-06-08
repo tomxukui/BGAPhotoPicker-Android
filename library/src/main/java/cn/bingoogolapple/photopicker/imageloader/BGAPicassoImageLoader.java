@@ -16,9 +16,11 @@
 package cn.bingoogolapple.photopicker.imageloader;
 
 import android.app.Activity;
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Callback;
@@ -38,47 +40,68 @@ public class BGAPicassoImageLoader extends BGAImageLoader {
     public void display(final ImageView imageView, String path, @DrawableRes int loadingResId, @DrawableRes int failResId, int width, int height, final DisplayDelegate delegate) {
         final String finalPath = getPath(path);
         Activity activity = getActivity(imageView);
-        Picasso.with(activity).load(finalPath).tag(activity).placeholder(loadingResId).error(failResId).resize(width, height).centerInside().into(imageView, new Callback.EmptyCallback() {
-            @Override
-            public void onSuccess() {
-                if (delegate != null) {
-                    delegate.onSuccess(imageView, finalPath);
+
+        if (isAndroidLifeOk(activity)) {
+            Picasso.with(activity).load(finalPath).tag(activity).placeholder(loadingResId).error(failResId).resize(width, height).centerInside().into(imageView, new Callback.EmptyCallback() {
+
+                @Override
+                public void onSuccess() {
+                    if (delegate != null) {
+                        delegate.onSuccess(imageView, finalPath);
+                    }
                 }
-            }
-        });
+
+            });
+        }
     }
 
     @Override
     public void download(String path, final DownloadDelegate delegate) {
         final String finalPath = getPath(path);
-        Picasso.with(BGABaseAdapterUtil.getApp()).load(finalPath).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                if (delegate != null) {
-                    delegate.onSuccess(finalPath, bitmap);
-                }
-            }
+        Application app = BGABaseAdapterUtil.getApp();
 
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                if (delegate != null) {
-                    delegate.onFailed(finalPath);
+        if (app != null) {
+            Picasso.with(app).load(finalPath).into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    if (delegate != null) {
+                        delegate.onSuccess(finalPath, bitmap);
+                    }
                 }
-            }
 
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-            }
-        });
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                    if (delegate != null) {
+                        delegate.onFailed(finalPath);
+                    }
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+            });
+        }
     }
 
     @Override
     public void pause(Activity activity) {
-        Picasso.with(activity).pauseTag(activity);
+        if (isAndroidLifeOk(activity)) {
+            Picasso.with(activity).pauseTag(activity);
+        }
     }
 
     @Override
     public void resume(Activity activity) {
-        Picasso.with(activity).resumeTag(activity);
+        if (isAndroidLifeOk(activity)) {
+            Picasso.with(activity).resumeTag(activity);
+        }
     }
+
+    @Override
+    public void clear(Activity activity, View view) {
+        if (isAndroidLifeOk(activity) && view != null && view instanceof ImageView) {
+            Picasso.with(activity).cancelRequest((ImageView) view);
+        }
+    }
+
 }

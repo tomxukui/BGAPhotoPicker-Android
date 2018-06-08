@@ -18,6 +18,7 @@ package cn.bingoogolapple.photopicker.imageloader;
 import android.app.Activity;
 import android.support.annotation.DrawableRes;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 /**
@@ -114,4 +115,9 @@ public class BGAImage {
     public static void resume(Activity activity) {
         getImageLoader().resume(activity);
     }
+
+    public static void clear(Activity activity, View view) {
+        getImageLoader().clear(activity, view);
+    }
+
 }

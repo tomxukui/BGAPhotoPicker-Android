@@ -52,6 +52,10 @@ public abstract class BGAImageLoader {
         return null;
     }
 
+    protected boolean isAndroidLifeOk(Activity activity) {
+        return activity != null && !activity.isFinishing();
+    }
+
     public abstract void display(ImageView imageView, String path, @DrawableRes int loadingResId, @DrawableRes int failResId, int width, int height, DisplayDelegate delegate);
 
     public abstract void download(String path, DownloadDelegate delegate);
@@ -59,6 +63,8 @@ public abstract class BGAImageLoader {
     public abstract void pause(Activity activity);
 
     public abstract void resume(Activity activity);
+
+    public abstract void clear(Activity activity, View view);
 
     public interface DisplayDelegate {
         void onSuccess(View view, String path);

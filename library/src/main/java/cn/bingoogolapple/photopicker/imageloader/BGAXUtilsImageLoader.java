@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.view.View;
 import android.widget.ImageView;
 
 import org.xutils.common.Callback;
@@ -104,4 +105,9 @@ public class BGAXUtilsImageLoader extends BGAImageLoader {
     @Override
     public void resume(Activity activity) {
     }
+
+    @Override
+    public void clear(Activity activity, View view) {
+    }
+
 }

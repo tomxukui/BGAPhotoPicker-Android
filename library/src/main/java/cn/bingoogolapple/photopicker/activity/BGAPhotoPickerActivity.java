@@ -25,6 +25,7 @@ import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.adapter.BGAPhotoPickerAdapter;
+import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 import cn.bingoogolapple.photopicker.model.BGAPhotoFolderModel;
 import cn.bingoogolapple.photopicker.pw.BGAPhotoFolderPw;
@@ -177,6 +178,14 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
         if (getIntent().getBooleanExtra(EXTRA_PAUSE_ON_SCROLL, false)) {
             mContentRv.addOnScrollListener(new BGARVOnScrollListener(this));
         }
+        mContentRv.setRecyclerListener(new RecyclerView.RecyclerListener() {
+
+            @Override
+            public void onViewRecycled(RecyclerView.ViewHolder holder) {
+                BGAImage.clear(BGAPhotoPickerActivity.this, holder.itemView);
+            }
+
+        });
     }
 
     @Override

@@ -107,5 +107,7 @@
             app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
             app:bga_snpl_plusEnable="true"
             app:bga_snpl_sortable="true" />
+
     </LinearLayout>
+
 </ScrollView>
