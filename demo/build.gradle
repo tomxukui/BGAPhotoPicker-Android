@@ -7,8 +7,8 @@ android {
         applicationId "cn.bingoogolapple.photopicker.demo"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 201
-        versionName '2.0.1'
+        versionCode 202
+        versionName '2.0.2'
     }
 
 //    dataBinding {
