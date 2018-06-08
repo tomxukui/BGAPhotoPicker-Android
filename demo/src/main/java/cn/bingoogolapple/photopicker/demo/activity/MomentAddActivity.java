@@ -28,11 +28,10 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 你自己项目里「可以不继承 BGAPPToolbarActivity」，我在这里继承 BGAPPToolbarActivity 只是为了方便写 Demo
  */
 public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermissions.PermissionCallbacks, BGASortableNinePhotoLayout.Delegate {
-    private static final int PRC_PHOTO_PICKER = 1;
 
+    private static final int PRC_PHOTO_PICKER = 1;
     private static final int RC_CHOOSE_PHOTO = 1;
     private static final int RC_PHOTO_PREVIEW = 2;
-
     private static final String EXTRA_MOMENT = "EXTRA_MOMENT";
 
     // ==================================== 测试图片选择器 START ====================================
@@ -132,7 +131,8 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
 
     public void onClick(View v) {
         if (v.getId() == R.id.tv_moment_add_choice_photo) {
-            choicePhotoWrapper(null);
+            mPhotosSnpl.setData(null);
+            choicePhotoWrapper();
 
         } else if (v.getId() == R.id.tv_moment_add_publish) {
             String content = mContentEt.getText().toString().trim();
@@ -150,7 +150,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
 
     @Override
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
-        choicePhotoWrapper(models);
+        choicePhotoWrapper();
     }
 
     @Override
@@ -176,7 +176,7 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
     }
 
     @AfterPermissionGranted(PRC_PHOTO_PICKER)
-    private void choicePhotoWrapper(ArrayList<String> models) {
+    private void choicePhotoWrapper() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
@@ -184,12 +184,14 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
 
             Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
                     .cameraFileDir(mTakePhotoCb.isChecked() ? takePhotoDir : null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
-                    .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
-                    .selectedPhotos(models) // 当前已选中的图片路径集合
+                    .maxChooseCount(mPhotosSnpl.getMaxItemCount()) // 图片选择张数的最大值
+                    .selectedPhotos(mPhotosSnpl.getData()) // 当前已选中的图片路径集合
                     .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
                     .spanCount(4)
                     .build();
+
             startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
+
         } else {
             EasyPermissions.requestPermissions(this, "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照", PRC_PHOTO_PICKER, perms);
         }
@@ -216,11 +218,8 @@ public class MomentAddActivity extends BGAPPToolbarActivity implements EasyPermi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == RC_CHOOSE_PHOTO) {
-            if (mSingleChoiceCb.isChecked()) {
-                mPhotosSnpl.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-            } else {
-                mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-            }
+            mPhotosSnpl.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
+
         } else if (requestCode == RC_PHOTO_PREVIEW) {
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         }
