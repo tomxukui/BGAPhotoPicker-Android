@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- 状态栏的颜色 -->
     <color name="bga_pp_colorPrimaryDark">@android:color/black</color>
     <!-- 导航栏的颜色 -->
@@ -19,7 +20,7 @@
     <!-- 拍摄照片文字颜色 -->
     <color name="bga_pp_take_photo_textColor">#adb2bb</color>
     <!-- 图片处于选中状态时的遮罩层颜色 -->
-    <color name="bga_pp_photo_selected_mask">#4D000000</color>
+    <color name="bga_pp_photo_selected_mask">#55000000</color>
     <!-- 右上角确认按钮不可用时的颜色 -->
     <color name="bga_pp_btn_confirm_disabled">#8017C7D1</color>
     <!-- 右上角确认按钮可用时的颜色 -->
@@ -32,4 +33,5 @@
     <color name="bga_pp_loading_progress_startColor">@android:color/white</color>
     <color name="bga_pp_loading_progress_centerColor">#17C7D1</color>
     <color name="bga_pp_loading_progress_endColor">#CC17C7D1</color>
+
 </resources>
