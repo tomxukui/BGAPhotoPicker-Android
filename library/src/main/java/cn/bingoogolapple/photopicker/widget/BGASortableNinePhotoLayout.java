@@ -53,21 +53,24 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     private int mItemWidth;
 
     public BGASortableNinePhotoLayout(Context context) {
-        this(context, null);
+        super(context);
+        initData(context, null, 0);
+        initView(context);
     }
 
     public BGASortableNinePhotoLayout(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initData(context, attrs, 0);
+        initView(context);
     }
 
     public BGASortableNinePhotoLayout(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initDefaultAttrs();
-        initCustomAttrs(context, attrs);
-        afterInitDefaultAndCustomAttrs();
+        initData(context, attrs, defStyle);
+        initView(context);
     }
 
-    private void initDefaultAttrs() {
+    private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mPlusEnable = true;
         mSortable = true;
         mEditable = true;
@@ -81,48 +84,27 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         mItemWhiteSpacing = BGABaseAdapterUtil.dp2px(4);
         mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_light;
         mOtherWhiteSpacing = BGABaseAdapterUtil.dp2px(100);
-    }
 
-    private void initCustomAttrs(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BGASortableNinePhotoLayout);
-        final int N = typedArray.getIndexCount();
-        for (int i = 0; i < N; i++) {
-            initCustomAttr(typedArray.getIndex(i), typedArray);
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BGASortableNinePhotoLayout, defStyleAttr, 0);
+
+            mPlusEnable = ta.getBoolean(R.styleable.BGASortableNinePhotoLayout_bga_snpl_plusEnable, mPlusEnable);
+            mSortable = ta.getBoolean(R.styleable.BGASortableNinePhotoLayout_bga_snpl_sortable, mSortable);
+            mDeleteDrawableResId = ta.getResourceId(R.styleable.BGASortableNinePhotoLayout_bga_snpl_deleteDrawable, mDeleteDrawableResId);
+            mDeleteDrawableOverlapQuarter = ta.getBoolean(R.styleable.BGASortableNinePhotoLayout_bga_snpl_deleteDrawableOverlapQuarter, mDeleteDrawableOverlapQuarter);
+            mMaxItemCount = ta.getInteger(R.styleable.BGASortableNinePhotoLayout_bga_snpl_maxItemCount, mMaxItemCount);
+            mItemSpanCount = ta.getInteger(R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemSpanCount, mItemSpanCount);
+            mPlusDrawableResId = ta.getResourceId(R.styleable.BGASortableNinePhotoLayout_bga_snpl_plusDrawable, mPlusDrawableResId);
+            mItemCornerRadius = ta.getDimensionPixelSize(R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemCornerRadius, mItemCornerRadius);
+            mItemWhiteSpacing = ta.getDimensionPixelSize(R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemWhiteSpacing, mItemWhiteSpacing);
+            mOtherWhiteSpacing = ta.getDimensionPixelOffset(R.styleable.BGASortableNinePhotoLayout_bga_snpl_otherWhiteSpacing, mOtherWhiteSpacing);
+            mPlaceholderDrawableResId = ta.getResourceId(R.styleable.BGASortableNinePhotoLayout_bga_snpl_placeholderDrawable, mPlaceholderDrawableResId);
+            mEditable = ta.getBoolean(R.styleable.BGASortableNinePhotoLayout_bga_snpl_editable, mEditable);
+            mItemWidth = ta.getDimensionPixelSize(R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemWidth, mItemWidth);
+
+            ta.recycle();
         }
-        typedArray.recycle();
-    }
 
-    private void initCustomAttr(int attr, TypedArray typedArray) {
-        if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_plusEnable) {
-            mPlusEnable = typedArray.getBoolean(attr, mPlusEnable);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_sortable) {
-            mSortable = typedArray.getBoolean(attr, mSortable);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_deleteDrawable) {
-            mDeleteDrawableResId = typedArray.getResourceId(attr, mDeleteDrawableResId);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_deleteDrawableOverlapQuarter) {
-            mDeleteDrawableOverlapQuarter = typedArray.getBoolean(attr, mDeleteDrawableOverlapQuarter);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_maxItemCount) {
-            mMaxItemCount = typedArray.getInteger(attr, mMaxItemCount);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemSpanCount) {
-            mItemSpanCount = typedArray.getInteger(attr, mItemSpanCount);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_plusDrawable) {
-            mPlusDrawableResId = typedArray.getResourceId(attr, mPlusDrawableResId);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemCornerRadius) {
-            mItemCornerRadius = typedArray.getDimensionPixelSize(attr, 0);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemWhiteSpacing) {
-            mItemWhiteSpacing = typedArray.getDimensionPixelSize(attr, mItemWhiteSpacing);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_otherWhiteSpacing) {
-            mOtherWhiteSpacing = typedArray.getDimensionPixelOffset(attr, mOtherWhiteSpacing);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_placeholderDrawable) {
-            mPlaceholderDrawableResId = typedArray.getResourceId(attr, mPlaceholderDrawableResId);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_editable) {
-            mEditable = typedArray.getBoolean(attr, mEditable);
-        } else if (attr == R.styleable.BGASortableNinePhotoLayout_bga_snpl_itemWidth) {
-            mItemWidth = typedArray.getDimensionPixelSize(attr, mItemWidth);
-        }
-    }
-
-    private void afterInitDefaultAndCustomAttrs() {
         if (mItemWidth == 0) {
             mItemWidth = (BGAPhotoPickerUtil.getScreenWidth() - mOtherWhiteSpacing) / mItemSpanCount;
 
@@ -130,19 +112,22 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             mItemWidth += mItemWhiteSpacing;
         }
 
+        mPhotoAdapter = new PhotoAdapter(this);
+        mPhotoAdapter.setOnItemChildClickListener(this);
+        mPhotoAdapter.setOnRVItemClickListener(this);
+    }
+
+    private void initView(Context context) {
         setOverScrollMode(OVER_SCROLL_NEVER);
         mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback());
         mItemTouchHelper.attachToRecyclerView(this);
 
-        mGridLayoutManager = new GridLayoutManager(getContext(), mItemSpanCount);
+        mGridLayoutManager = new GridLayoutManager(context, mItemSpanCount);
         setLayoutManager(mGridLayoutManager);
         addItemDecoration(BGAGridDivider.newInstanceWithSpacePx(mItemWhiteSpacing / 2));
 
         calculatePhotoTopRightMargin();
 
-        mPhotoAdapter = new PhotoAdapter(this);
-        mPhotoAdapter.setOnItemChildClickListener(this);
-        mPhotoAdapter.setOnRVItemClickListener(this);
         setAdapter(mPhotoAdapter);
     }
 
@@ -453,6 +438,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
                 BGAImage.display(helper.getImageView(R.id.iv_item_nine_photo_photo), mPlaceholderDrawableResId, model, mImageSize);
             }
         }
+
     }
 
     private class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
@@ -519,6 +505,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             ((BGARecyclerViewHolder) viewHolder).getViewHolderHelper().getImageView(R.id.iv_item_nine_photo_photo).setColorFilter(null);
             super.clearView(recyclerView, viewHolder);
         }
+
     }
 
     public interface Delegate {
@@ -530,4 +517,5 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
 
         void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout, int fromPosition, int toPosition, ArrayList<String> models);
     }
+
 }
