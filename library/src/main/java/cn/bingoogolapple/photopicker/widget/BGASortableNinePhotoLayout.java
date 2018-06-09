@@ -125,6 +125,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     private void afterInitDefaultAndCustomAttrs() {
         if (mItemWidth == 0) {
             mItemWidth = (BGAPhotoPickerUtil.getScreenWidth() - mOtherWhiteSpacing) / mItemSpanCount;
+
         } else {
             mItemWidth += mItemWhiteSpacing;
         }
@@ -210,6 +211,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             int deleteDrawableWidth = BitmapFactory.decodeResource(getResources(), mDeleteDrawableResId).getWidth();
             int deleteDrawablePadding = getResources().getDimensionPixelOffset(R.dimen.bga_pp_size_delete_padding);
             mPhotoTopRightMargin = deleteDrawablePadding + deleteDrawableWidth / 2;
+
         } else {
             mPhotoTopRightMargin = 0;
         }
@@ -358,6 +360,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             if (mDelegate != null) {
                 mDelegate.onClickAddNinePhotoItem(this, itemView, position, getData());
             }
+
         } else {
             if (mDelegate != null && itemView.getScaleX() <= 1.0f) {
                 mDelegate.onClickNinePhotoItem(this, itemView, position, mPhotoAdapter.getItem(position), getData());
@@ -437,13 +440,16 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             if (isPlusItem(position)) {
                 helper.setVisibility(R.id.iv_item_nine_photo_flag, View.GONE);
                 helper.setImageResource(R.id.iv_item_nine_photo_photo, mPlusDrawableResId);
+
             } else {
                 if (mEditable) {
                     helper.setVisibility(R.id.iv_item_nine_photo_flag, View.VISIBLE);
                     helper.setImageResource(R.id.iv_item_nine_photo_flag, mDeleteDrawableResId);
+
                 } else {
                     helper.setVisibility(R.id.iv_item_nine_photo_flag, View.GONE);
                 }
+
                 BGAImage.display(helper.getImageView(R.id.iv_item_nine_photo_photo), mPlaceholderDrawableResId, model, mImageSize);
             }
         }
@@ -464,9 +470,11 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+
             if (mPhotoAdapter.isPlusItem(viewHolder.getAdapterPosition())) {
                 dragFlags = ItemTouchHelper.ACTION_STATE_IDLE;
             }
+
             int swipeFlags = ItemTouchHelper.ACTION_STATE_IDLE;
             return makeMovementFlags(dragFlags, swipeFlags);
         }
@@ -476,10 +484,12 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             if (source.getItemViewType() != target.getItemViewType() || mPhotoAdapter.isPlusItem(target.getAdapterPosition())) {
                 return false;
             }
+
             mPhotoAdapter.moveItem(source.getAdapterPosition(), target.getAdapterPosition());
             if (mDelegate != null) {
                 mDelegate.onNinePhotoItemExchanged(BGASortableNinePhotoLayout.this, source.getAdapterPosition(), target.getAdapterPosition(), getData());
             }
+
             return true;
         }
 
