@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.bingoogolapple.photopicker.widget.BGAImageView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/iv_item_photo_camera_camera"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bga_pp_photo_item_bg">
-
-    <cn.bingoogolapple.photopicker.widget.BGAImageView
-        android:id="@+id/iv_item_photo_camera_camera"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="center"
-        android:src="@mipmap/bga_pp_ic_camera"
-        app:bga_iv_circle="false"
-        app:bga_iv_square="true" />
-
-</RelativeLayout>
+    android:background="@color/bga_pp_photo_item_bg"
+    android:scaleType="center"
+    android:src="@mipmap/bga_pp_ic_camera"
+    app:bga_iv_circle="false"
+    app:bga_iv_square="true" />
