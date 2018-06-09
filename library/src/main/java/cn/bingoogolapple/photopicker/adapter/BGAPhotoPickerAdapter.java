@@ -17,6 +17,7 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
  * 描述:
  */
 public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
+
     private ArrayList<String> mSelectedPhotos = new ArrayList<>();
     private int mPhotoSize;
     private boolean mTakePhotoEnabled;
@@ -30,6 +31,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
     public int getItemViewType(int position) {
         if (mTakePhotoEnabled && position == 0) {
             return R.layout.bga_pp_item_photo_camera;
+
         } else {
             return R.layout.bga_pp_item_photo_picker;
         }
@@ -54,6 +56,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
             if (mSelectedPhotos.contains(model)) {
                 helper.setImageResource(R.id.iv_item_photo_picker_flag, R.mipmap.bga_pp_ic_cb_checked);
                 helper.getImageView(R.id.iv_item_photo_picker_photo).setColorFilter(helper.getConvertView().getResources().getColor(R.color.bga_pp_photo_selected_mask));
+
             } else {
                 helper.setImageResource(R.id.iv_item_photo_picker_flag, R.mipmap.bga_pp_ic_cb_normal);
                 helper.getImageView(R.id.iv_item_photo_picker_photo).setColorFilter(null);
@@ -65,6 +68,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
         if (selectedPhotos != null) {
             mSelectedPhotos = selectedPhotos;
         }
+
         notifyDataSetChanged();
     }
 
