@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.pw;
 
 import android.app.Activity;
@@ -29,6 +14,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import cn.bingoogolapple.baseadapter.BGABaseAdapterUtil;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.baseadapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -44,11 +30,15 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
  * 描述:选择图片目录的PopupWindow
  */
 public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemClickListener {
+
     public static final int ANIM_DURATION = 300;
+
     private LinearLayout mRootLl;
     private RecyclerView mContentRv;
+
     private FolderAdapter mFolderAdapter;
     private Delegate mDelegate;
+
     private int mCurrentPosition;
 
     public BGAPhotoFolderPw(Activity activity, View anchorView, Delegate delegate) {
@@ -97,6 +87,7 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
                 setHeight(BGAPhotoPickerUtil.getScreenHeight() - offsetY);
             }
             showAtLocation(mAnchorView, Gravity.NO_GRAVITY, 0, offsetY);
+
         } else {
             showAsDropDown(mAnchorView);
         }
@@ -141,26 +132,29 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
         if (mDelegate != null && mCurrentPosition != position) {
             mDelegate.onSelectedFolder(position);
         }
+
         mCurrentPosition = position;
+
         dismiss();
     }
 
     private class FolderAdapter extends BGARecyclerViewAdapter<BGAPhotoFolderModel> {
+
         private int mImageSize;
 
         public FolderAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.bga_pp_item_photo_folder);
-
             mData = new ArrayList<>();
-            mImageSize = BGAPhotoPickerUtil.getScreenWidth() / 10;
+            mImageSize = BGABaseAdapterUtil.dp2px(80);
         }
 
         @Override
         protected void fillData(BGAViewHolderHelper helper, int position, BGAPhotoFolderModel model) {
             helper.setText(R.id.tv_item_photo_folder_name, model.name);
             helper.setText(R.id.tv_item_photo_folder_count, String.valueOf(model.getCount()));
-            BGAImage.display(helper.getImageView(R.id.iv_item_photo_folder_photo), R.mipmap.bga_pp_ic_holder_light, model.coverPath, mImageSize);
+            BGAImage.display(helper.getImageView(R.id.iv_item_photo_folder_photo), R.mipmap.bga_pp_ic_holder_dark, model.coverPath, mImageSize);
         }
+
     }
 
     public interface Delegate {
@@ -168,4 +162,5 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
 
         void executeDismissAnim();
     }
+
 }

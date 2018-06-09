@@ -7,8 +7,8 @@ android {
         applicationId "cn.bingoogolapple.photopicker.demo"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 207
-        versionName '2.0.7'
+        versionCode 300
+        versionName '3.0.0'
     }
 
     buildTypes {

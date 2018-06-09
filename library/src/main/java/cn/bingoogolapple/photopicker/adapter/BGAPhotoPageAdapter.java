@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.adapter;
 
 import android.graphics.drawable.Drawable;
@@ -22,7 +7,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.util.BGABrowserPhotoViewAttacher;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
@@ -55,6 +39,7 @@ public class BGAPhotoPageAdapter extends PagerAdapter {
         final BGABrowserPhotoViewAttacher photoViewAttacher = new BGABrowserPhotoViewAttacher(imageView);
         photoViewAttacher.setOnViewTapListener(mOnViewTapListener);
         imageView.setDelegate(new BGAImageView.Delegate() {
+
             @Override
             public void onDrawableChanged(Drawable drawable) {
                 if (drawable != null && drawable.getIntrinsicHeight() > drawable.getIntrinsicWidth() && drawable.getIntrinsicHeight() > BGAPhotoPickerUtil.getScreenHeight()) {
@@ -64,10 +49,10 @@ public class BGAPhotoPageAdapter extends PagerAdapter {
                     photoViewAttacher.update();
                 }
             }
+
         });
 
-        BGAImage.display(imageView, R.mipmap.bga_pp_ic_holder_dark, mPreviewPhotos.get(position), BGAPhotoPickerUtil.getScreenWidth(), BGAPhotoPickerUtil.getScreenHeight());
-
+        BGAImage.display(imageView, 0, mPreviewPhotos.get(position), BGAPhotoPickerUtil.getScreenWidth(), BGAPhotoPickerUtil.getScreenHeight());
         return imageView;
     }
 
@@ -84,4 +69,5 @@ public class BGAPhotoPageAdapter extends PagerAdapter {
     public String getItem(int position) {
         return mPreviewPhotos == null ? "" : mPreviewPhotos.get(position);
     }
+
 }

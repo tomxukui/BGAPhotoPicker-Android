@@ -33,9 +33,15 @@ public class BGAGlideImageLoader extends BGAImageLoader {
         Activity activity = getActivity(imageView);
 
         if (isAndroidLifeOk(activity)) {
+            RequestOptions options = new RequestOptions()
+                    .placeholder(loadingResId)
+                    .error(failResId)
+                    .override(width, height)
+                    .dontAnimate();
+
             Glide.with(activity)
                     .load(finalPath)
-                    .apply(new RequestOptions().placeholder(loadingResId).error(failResId).override(width, height).dontAnimate())
+                    .apply(options)
                     .listener(new RequestListener<Drawable>() {
 
                         @Override

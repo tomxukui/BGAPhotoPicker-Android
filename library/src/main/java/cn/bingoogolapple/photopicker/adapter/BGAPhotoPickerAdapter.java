@@ -39,6 +39,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
     public void setItemChildListener(BGAViewHolderHelper helper, int viewType) {
         if (viewType == R.layout.bga_pp_item_photo_camera) {
             helper.setItemChildClickListener(R.id.iv_item_photo_camera_camera);
+
         } else {
             helper.setItemChildClickListener(R.id.iv_item_photo_picker_flag);
             helper.setItemChildClickListener(R.id.iv_item_photo_picker_photo);

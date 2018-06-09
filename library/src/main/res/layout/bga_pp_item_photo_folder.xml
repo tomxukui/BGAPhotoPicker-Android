@@ -41,5 +41,7 @@
             android:textColor="@color/bga_pp_folder_count_textColor"
             android:textSize="@dimen/bga_pp_textSize_level1"
             tools:text="168" />
+
     </LinearLayout>
+
 </LinearLayout>
