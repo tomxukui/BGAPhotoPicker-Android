@@ -7,8 +7,8 @@ android {
         applicationId "cn.bingoogolapple.photopicker.demo"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 301
-        versionName '3.0.1'
+        versionCode 302
+        versionName '3.0.2'
     }
 
     buildTypes {
@@ -34,7 +34,7 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation project(':library')
-    implementation 'com.github.tomxukui:PhotoView:1.0.0'
+    implementation 'com.github.tomxukui:PhotoView:1.0.1'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     // -------------------- 以上4个库是必须依赖的 ----------------------------
 

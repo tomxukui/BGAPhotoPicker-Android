@@ -14,6 +14,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ablingbling.library.photoview.PhotoViewAttacher;
+
 import java.util.ArrayList;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
@@ -21,7 +23,6 @@ import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

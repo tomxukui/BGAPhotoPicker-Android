@@ -19,7 +19,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
+import com.ablingbling.library.photoview.PhotoViewAttacher;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

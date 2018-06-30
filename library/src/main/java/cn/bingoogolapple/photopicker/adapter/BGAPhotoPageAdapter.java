@@ -5,13 +5,14 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ablingbling.library.photoview.PhotoViewAttacher;
+
 import java.util.ArrayList;
 
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.util.BGABrowserPhotoViewAttacher;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import cn.bingoogolapple.photopicker.widget.BGAImageView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

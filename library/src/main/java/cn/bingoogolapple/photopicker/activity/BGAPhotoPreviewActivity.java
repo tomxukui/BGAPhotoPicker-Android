@@ -30,6 +30,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ablingbling.library.photoview.PhotoViewAttacher;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +45,6 @@ import cn.bingoogolapple.photopicker.util.BGAAsyncTask;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import cn.bingoogolapple.photopicker.util.BGASavePhotoTask;
 import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
