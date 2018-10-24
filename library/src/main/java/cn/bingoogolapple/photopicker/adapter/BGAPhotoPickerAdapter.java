@@ -11,11 +11,6 @@ import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.model.BGAPhotoFolderModel;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/6/28 上午11:09
- * 描述:
- */
 public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
 
     private ArrayList<String> mSelectedPhotos = new ArrayList<>();

@@ -10,11 +10,6 @@ import android.widget.RelativeLayout;
 
 import cn.bingoogolapple.photopicker.R;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/6/24 下午2:32
- * 描述:
- */
 public abstract class BGAPPToolbarActivity extends AppCompatActivity {
 
     protected String TAG;
