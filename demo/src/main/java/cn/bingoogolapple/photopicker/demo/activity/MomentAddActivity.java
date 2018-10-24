@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.yanzhenjie.permission.Permission;
 
+import java.util.List;
+
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.photopicker.demo.R;
 import cn.bingoogolapple.photopicker.demo.adapter.PhotoViewGroupRecyclerAdapter;
@@ -30,6 +32,25 @@ public class MomentAddActivity extends BaseActivity {
         setContentView(R.layout.activity_moment_add);
         initData();
         initView();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+
+            case REQUEST_PICK_PHOTO: {
+                if (resultCode == RESULT_OK) {
+                    List<String> photos = BGAPhotoPickerActivity.getSelectedPhotos(data);
+                    mRecyclerAdapter.addData(photos);
+                }
+            }
+            break;
+
+            default:
+                break;
+
+        }
     }
 
     private void initData() {
