@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ablingbling.library.photoview.PhotoViewAttacher;
@@ -32,7 +31,7 @@ import qiu.niorgai.StatusBarCompat;
 
 public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoViewAttacher.OnViewTapListener {
 
-    private LinearLayout linear_container;
+    private FrameLayout frame_container;
     private Toolbar toolbar;
     private BGAHackyViewPager viewPager;
     private TextView tv_title;
@@ -124,7 +123,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
     }
 
     private void initData() {
-        mDeleteIcon = getIntent().getIntExtra(BGAKey.EXTRA_DELETE_ICON, R.mipmap.bga_pp_ic_delete);
+        mDeleteIcon = getIntent().getIntExtra(BGAKey.EXTRA_DELETE_ICON, R.drawable.bga_ic_delete);
         mActionBarColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, Color.parseColor("#000000"));
         mActionBarTextColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_TEXT_COLOR, Color.parseColor("#ffffff"));
         mBackResId = getIntent().getIntExtra(BGAKey.EXTRA_BACK_RESID, R.mipmap.bga_app_ic_back);
@@ -138,7 +137,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
     }
 
     private void initView() {
-        linear_container = findViewById(R.id.linear_container);
+        frame_container = findViewById(R.id.frame_container);
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.viewPager);
 
@@ -150,7 +149,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
         toolbar.setBackgroundColor(mActionBarColor);
         toolbar.setNavigationIcon(mBackResId);
 
-        linear_container.setBackgroundColor(mBackgroundColor);
+        frame_container.setBackgroundColor(mBackgroundColor);
 
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
