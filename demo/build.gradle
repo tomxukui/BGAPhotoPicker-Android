@@ -23,10 +23,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // 以下几个库是演示案例所使用到的
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
     implementation 'pub.devrel:easypermissions:1.0.1'
     // 以上几个库是演示案例所使用到的
 
