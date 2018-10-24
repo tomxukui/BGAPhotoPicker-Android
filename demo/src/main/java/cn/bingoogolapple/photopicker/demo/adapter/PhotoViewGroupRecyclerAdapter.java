@@ -15,8 +15,8 @@ import java.util.List;
 import cn.bingoogolapple.photopicker.demo.R;
 import cn.bingoogolapple.photopicker.demo.util.AndroidLifecycleUtil;
 import cn.bingoogolapple.photopicker.demo.util.GlideApp;
-import cn.bingoogolapple.photopicker.demo.widget.ScaleImageView;
 import cn.bingoogolapple.photopicker.util.DensityUtil;
+import cn.bingoogolapple.photopicker.widget.ScaleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MatchMatch.Vertical"
-    android:gravity="center_horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_system_gallery_crop_avatar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_margin="30dp"
-        android:src="@mipmap/bga_pp_ic_holder_light" />
+        android:layout_margin="30dp" />
 
     <TextView
         android:id="@+id/tv_system_gallery_crop_choose"
-        style="@style/MatchWrapTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="从系统相册选择头像" />
 
     <TextView
         android:id="@+id/tv_system_gallery_crop_take_photo"
-        style="@style/MatchWrapTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="拍照" />
 
 </LinearLayout>

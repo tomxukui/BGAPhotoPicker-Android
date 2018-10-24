@@ -5,41 +5,4 @@
         <attr name="siv_scale" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="BGAImageView">
-        <!-- 默认图片资源，默认值为 null -->
-        <attr name="android:src" />
-        <!-- 是否是圆形，默认值为 false -->
-        <attr name="bga_iv_circle" format="boolean" />
-        <!-- 是否是正方形，默认值为 false -->
-        <attr name="bga_iv_square" format="boolean" />
-        <!-- 圆角矩形的半径，默认值为 0dp -->
-        <attr name="bga_iv_cornerRadius" format="reference|dimension" />
-        <!-- 描边的宽度，默认值为 0dp -->
-        <attr name="bga_iv_borderWidth" format="reference|dimension" />
-        <!-- 描边的颜色，默认值为 Color.WHITE -->
-        <attr name="bga_iv_borderColor" format="reference|color" />
-    </declare-styleable>
-
-    <declare-styleable name="BGAImageGridLayout">
-        <attr name="bga_igl_space" format="dimension" />
-        <attr name="bga_igl_placeholder" format="reference" />
-        <attr name="bga_igl_cornerRadius" format="dimension" />
-        <attr name="bga_igl_circle" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="BGANinePhotoLayout">
-        <!-- Item 条目圆角尺寸，默认值为 0dp -->
-        <attr name="bga_npl_itemCornerRadius" format="dimension|reference" />
-        <!-- 当只有一张图片时，是否显示成大图，默认值为 true -->
-        <attr name="bga_npl_showAsLargeWhenOnlyOne" format="boolean" />
-        <!-- Item 间的水平和垂直间距，默认值为 4dp -->
-        <attr name="bga_npl_itemWhiteSpacing" format="dimension|reference" />
-        <!-- 占位图资源，默认值为 R.mipmap.bga_pp_ic_holder_light -->
-        <attr name="bga_npl_placeholderDrawable" format="reference" />
-        <!-- 当只有一张图片并且显示大图时，大图的宽度占屏幕宽度的比例 -->
-        <attr name="bga_npl_radioWhenOnlyOne" format="float" />
-        <!--图片是否是圆形-->
-        <attr name="bga_npl_circle" format="boolean" />
-    </declare-styleable>
-
 </resources>
