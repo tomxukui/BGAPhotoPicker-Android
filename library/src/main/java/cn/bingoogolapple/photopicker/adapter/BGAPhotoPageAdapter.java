@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.ablingbling.library.photoview.PhotoViewAttacher;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.bingoogolapple.photopicker.util.BGABrowserPhotoViewAttacher;
@@ -15,17 +16,22 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import cn.bingoogolapple.photopicker.widget.BGAImageView;
 
 public class BGAPhotoPageAdapter extends PagerAdapter {
-    private ArrayList<String> mPreviewPhotos;
+
+    private ArrayList<String> mPhotos;
     private PhotoViewAttacher.OnViewTapListener mOnViewTapListener;
 
-    public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener onViewTapListener, ArrayList<String> previewPhotos) {
-        mOnViewTapListener = onViewTapListener;
-        mPreviewPhotos = previewPhotos;
+    public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener listener) {
+        this(listener, null);
+    }
+
+    public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener listener, ArrayList<String> photos) {
+        mOnViewTapListener = listener;
+        mPhotos = (photos == null ? new ArrayList<String>() : photos);
     }
 
     @Override
     public int getCount() {
-        return mPreviewPhotos == null ? 0 : mPreviewPhotos.size();
+        return mPhotos.size();
     }
 
     @Override
@@ -48,7 +54,7 @@ public class BGAPhotoPageAdapter extends PagerAdapter {
 
         });
 
-        BGAImage.display(imageView, 0, mPreviewPhotos.get(position), BGAPhotoPickerUtil.getScreenWidth(), BGAPhotoPickerUtil.getScreenHeight());
+        BGAImage.display(imageView, 0, mPhotos.get(position), BGAPhotoPickerUtil.getScreenWidth(), BGAPhotoPickerUtil.getScreenHeight());
         return imageView;
     }
 
@@ -62,8 +68,29 @@ public class BGAPhotoPageAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public String getItem(int position) {
-        return mPreviewPhotos == null ? "" : mPreviewPhotos.get(position);
+    public void setNewData(List<String> photos) {
+        mPhotos.clear();
+
+        if (photos != null) {
+            mPhotos.addAll(photos);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public List<String> getData() {
+        return mPhotos;
+    }
+
+    public String getPosition(int position) {
+        return mPhotos == null ? "" : mPhotos.get(position);
+    }
+
+    public void remove(int position) {
+        if (position >= 0 && position < mPhotos.size()) {
+            mPhotos.remove(position);
+            notifyDataSetChanged();
+        }
     }
 
 }

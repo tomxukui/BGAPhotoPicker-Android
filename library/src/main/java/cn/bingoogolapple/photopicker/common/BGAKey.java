@@ -23,6 +23,6 @@ public class BGAKey {
     public static final String EXTRA_IS_FROM_TAKE_PHOTO = "EXTRA_IS_FROM_TAKE_PHOTO";
     public static final String EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION";
     public static final String EXTRA_PREVIEW_IS_HIDDEN = "EXTRA_PREVIEW_IS_HIDDEN";
-
+    public static final String EXTRA_DELETE_ICON = "EXTRA_DELETE_ICON";
 
 }

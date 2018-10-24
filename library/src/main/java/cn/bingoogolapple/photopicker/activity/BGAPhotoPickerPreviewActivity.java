@@ -214,7 +214,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
 
             @Override
             public void onNoDoubleClick(View v) {
-                String currentPhoto = mPhotoPageAdapter.getItem(viewPager.getCurrentItem());
+                String currentPhoto = mPhotoPageAdapter.getPosition(viewPager.getCurrentItem());
                 if (mSelectedPhotos.contains(currentPhoto)) {
                     mSelectedPhotos.remove(currentPhoto);
                     tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_normal, 0, 0, 0);
@@ -316,7 +316,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
 
         tv_title.setText((viewPager.getCurrentItem() + 1) + "/" + mPhotoPageAdapter.getCount());
 
-        if (mSelectedPhotos.contains(mPhotoPageAdapter.getItem(viewPager.getCurrentItem()))) {
+        if (mSelectedPhotos.contains(mPhotoPageAdapter.getPosition(viewPager.getCurrentItem()))) {
             tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_checked, 0, 0, 0);
 
         } else {

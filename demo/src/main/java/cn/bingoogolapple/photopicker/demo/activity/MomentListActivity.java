@@ -3,7 +3,6 @@ package cn.bingoogolapple.photopicker.demo.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -130,19 +128,10 @@ public class MomentListActivity extends BGAPPToolbarActivity implements EasyPerm
 
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            File downloadDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerDownload");
-            BGAPhotoPreviewActivity.IntentBuilder photoPreviewIntentBuilder = new BGAPhotoPreviewActivity.IntentBuilder(this)
-                    .saveImgDir(downloadDir); // 保存图片的目录，如果传 null，则没有保存图片功能
+            startActivity(new BGAPhotoPreviewActivity.IntentBuilder(this)
+                    .selectedPhotos((ArrayList<String>) mCurrentClickNpl.getData())
+                    .currentPosition(mCurrentClickNpl.getCurrentClickItemPosition()).build());
 
-            if (mCurrentClickNpl.getCount() == 1) {
-                // 预览单张图片
-                photoPreviewIntentBuilder.previewPhoto(mCurrentClickNpl.getCurrentClickItem());
-            } else if (mCurrentClickNpl.getCount() > 1) {
-                // 预览多张图片
-                photoPreviewIntentBuilder.previewPhotos((ArrayList<String>) mCurrentClickNpl.getData())
-                        .currentPosition(mCurrentClickNpl.getCurrentClickItemPosition()); // 当前预览图片的索引
-            }
-            startActivity(photoPreviewIntentBuilder.build());
         } else {
             EasyPermissions.requestPermissions(this, "图片预览需要以下权限:\n\n1.访问设备上的照片", PRC_PHOTO_PREVIEW, perms);
         }

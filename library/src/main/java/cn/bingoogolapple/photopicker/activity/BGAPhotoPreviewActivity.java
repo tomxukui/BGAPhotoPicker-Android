@@ -1,73 +1,53 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ablingbling.library.photoview.PhotoViewAttacher;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
-import cn.bingoogolapple.photopicker.imageloader.BGAImage;
-import cn.bingoogolapple.photopicker.imageloader.BGAImageLoader;
-import cn.bingoogolapple.photopicker.util.BGAAsyncTask;
-import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
-import cn.bingoogolapple.photopicker.util.BGASavePhotoTask;
+import cn.bingoogolapple.photopicker.common.BGAKey;
 import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
+import qiu.niorgai.StatusBarCompat;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/6/24 下午2:59
- * 描述:图片预览界面
- */
-public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements PhotoViewAttacher.OnViewTapListener, BGAAsyncTask.Callback<Void> {
+public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoViewAttacher.OnViewTapListener {
 
-    private static final String EXTRA_SAVE_PHOTO_DIR = "EXTRA_SAVE_PHOTO_DIR";
-    private static final String EXTRA_PREVIEW_PHOTOS = "EXTRA_PREVIEW_PHOTOS";
-    private static final String EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION";
+    private LinearLayout linear_container;
+    private Toolbar toolbar;
+    private BGAHackyViewPager viewPager;
+    private TextView tv_title;
+    private AppCompatImageView iv_delete;
 
-    private TextView mTitleTv;
-    private ImageView mDownloadIv;
-    private BGAHackyViewPager mContentHvp;
-    private BGAPhotoPageAdapter mPhotoPageAdapter;
-
-    private boolean mIsSinglePreview;
-
-    private File mSavePhotoDir;
-
+    private int mDeleteIcon;
+    private int mActionBarColor;
+    private int mActionBarTextColor;
+    private int mBackResId;
+    private int mBackgroundColor;
     private boolean mIsHidden = false;
-    private BGASavePhotoTask mSavePhotoTask;
+    private int mCurrentPosition;
+    private ArrayList<String> mSelectedPhotos;
+
+    private BGAPhotoPageAdapter mPhotoPageAdapter;
 
     /**
      * 上一次标题栏显示或隐藏的时间戳
@@ -75,33 +55,48 @@ public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements Pho
     private long mLastShowHiddenTime;
 
     public static class IntentBuilder {
+
         private Intent mIntent;
 
         public IntentBuilder(Context context) {
             mIntent = new Intent(context, BGAPhotoPreviewActivity.class);
         }
 
-        /**
-         * 保存图片的目录，如果传 null，则没有保存图片功能
-         */
-        public IntentBuilder saveImgDir(@Nullable File saveImgDir) {
-            mIntent.putExtra(EXTRA_SAVE_PHOTO_DIR, saveImgDir);
+        public IntentBuilder deleteIcon(int icon) {
+            mIntent.putExtra(BGAKey.EXTRA_DELETE_ICON, icon);
             return this;
         }
 
-        /**
-         * 当前预览的图片路径
-         */
-        public IntentBuilder previewPhoto(String photoPath) {
-            mIntent.putStringArrayListExtra(EXTRA_PREVIEW_PHOTOS, new ArrayList<>(Arrays.asList(photoPath)));
+        public IntentBuilder actionBarColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder actionBarTextColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_ACTIONBAR_TEXT_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder backResId(int backResId) {
+            mIntent.putExtra(BGAKey.EXTRA_BACK_RESID, backResId);
+            return this;
+        }
+
+        public IntentBuilder backgroundColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_BACKGROUND_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder isHidden(boolean isHidden) {
+            mIntent.putExtra(BGAKey.EXTRA_IS_HIDDEN, isHidden);
             return this;
         }
 
         /**
          * 当前预览的图片路径集合
          */
-        public IntentBuilder previewPhotos(ArrayList<String> previewPhotos) {
-            mIntent.putStringArrayListExtra(EXTRA_PREVIEW_PHOTOS, previewPhotos);
+        public IntentBuilder selectedPhotos(ArrayList<String> photos) {
+            mIntent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, photos);
             return this;
         }
 
@@ -109,102 +104,121 @@ public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements Pho
          * 当前预览的图片索引
          */
         public IntentBuilder currentPosition(int currentPosition) {
-            mIntent.putExtra(EXTRA_CURRENT_POSITION, currentPosition);
+            mIntent.putExtra(BGAKey.EXTRA_CURRENT_POSITION, currentPosition);
             return this;
         }
 
         public Intent build() {
             return mIntent;
         }
+
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
-        setNoLinearContentView(R.layout.bga_pp_activity_photo_preview);
-        mContentHvp = findViewById(R.id.hvp_photo_preview_content);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.bga_activity_photo_preview);
+        initData();
+        initView();
+        setView();
     }
 
-    @Override
-    protected void setListener() {
-        mContentHvp.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+    private void initData() {
+        mDeleteIcon = getIntent().getIntExtra(BGAKey.EXTRA_DELETE_ICON, R.mipmap.bga_pp_ic_delete);
+        mActionBarColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, Color.parseColor("#000000"));
+        mActionBarTextColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_TEXT_COLOR, Color.parseColor("#ffffff"));
+        mBackResId = getIntent().getIntExtra(BGAKey.EXTRA_BACK_RESID, R.mipmap.bga_app_ic_back);
+        mBackgroundColor = getIntent().getIntExtra(BGAKey.EXTRA_BACKGROUND_COLOR, Color.parseColor("#000000"));
+        mIsHidden = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_HIDDEN, true);
+        mCurrentPosition = getIntent().getIntExtra(BGAKey.EXTRA_CURRENT_POSITION, 0);
+        mSelectedPhotos = getIntent().getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
+        if (mSelectedPhotos == null) {
+            mSelectedPhotos = new ArrayList<>();
+        }
+    }
+
+    private void initView() {
+        linear_container = findViewById(R.id.linear_container);
+        toolbar = findViewById(R.id.toolbar);
+        viewPager = findViewById(R.id.viewPager);
+
+        StatusBarCompat.setStatusBarColor(this, mActionBarColor);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+        toolbar.setBackgroundColor(mActionBarColor);
+        toolbar.setNavigationIcon(mBackResId);
+
+        linear_container.setBackgroundColor(mBackgroundColor);
+
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
             @Override
             public void onPageSelected(int position) {
                 renderTitleTv();
             }
+
         });
     }
 
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        mSavePhotoDir = (File) getIntent().getSerializableExtra(EXTRA_SAVE_PHOTO_DIR);
-        if (mSavePhotoDir != null && !mSavePhotoDir.exists()) {
-            mSavePhotoDir.mkdirs();
-        }
+    private void setView() {
+        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, mSelectedPhotos);
+        viewPager.setAdapter(mPhotoPageAdapter);
+        viewPager.setCurrentItem(mCurrentPosition, false);
 
-        ArrayList<String> previewPhotos = getIntent().getStringArrayListExtra(EXTRA_PREVIEW_PHOTOS);
-        int currentPosition = getIntent().getIntExtra(EXTRA_CURRENT_POSITION, 0);
-        mIsSinglePreview = previewPhotos.size() == 1;
-        if (mIsSinglePreview) {
-            currentPosition = 0;
-        }
+        //过2秒隐藏标题栏
+        toolbar.postDelayed(new Runnable() {
 
-        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, previewPhotos);
-        mContentHvp.setAdapter(mPhotoPageAdapter);
-        mContentHvp.setCurrentItem(currentPosition, false);
-
-        // 过2秒隐藏标题栏
-        mToolbar.postDelayed(new Runnable() {
             @Override
             public void run() {
                 hiddenTitleBar();
             }
+
         }, 2000);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bga_pp_menu_photo_preview, menu);
+        getMenuInflater().inflate(R.menu.bga_menu_photo_preview, menu);
         MenuItem menuItem = menu.findItem(R.id.item_photo_preview_title);
         View actionView = menuItem.getActionView();
 
-        mTitleTv = actionView.findViewById(R.id.tv_photo_preview_title);
-        mDownloadIv = actionView.findViewById(R.id.iv_photo_preview_download);
-        mDownloadIv.setOnClickListener(new BGAOnNoDoubleClickListener() {
+        tv_title = actionView.findViewById(R.id.tv_title);
+        iv_delete = actionView.findViewById(R.id.iv_delete);
+
+        tv_title.setTextColor(mActionBarTextColor);
+        renderTitleTv();
+
+        iv_delete.setImageResource(mDeleteIcon);
+        iv_delete.setOnClickListener(new BGAOnNoDoubleClickListener() {
+
             @Override
             public void onNoDoubleClick(View v) {
-                if (mSavePhotoTask == null) {
-                    savePic();
-                }
+                mPhotoPageAdapter.remove(viewPager.getCurrentItem());
             }
+
         });
-
-        if (mSavePhotoDir == null) {
-            mDownloadIv.setVisibility(View.INVISIBLE);
-        }
-
-        renderTitleTv();
 
         return true;
     }
 
     private void renderTitleTv() {
-        if (mTitleTv == null || mPhotoPageAdapter == null) {
+        if (tv_title == null || mPhotoPageAdapter == null) {
             return;
         }
 
-        if (mIsSinglePreview) {
-            mTitleTv.setText(R.string.bga_pp_view_photo);
-        } else {
-            mTitleTv.setText((mContentHvp.getCurrentItem() + 1) + "/" + mPhotoPageAdapter.getCount());
-        }
+        tv_title.setText((viewPager.getCurrentItem() + 1) + "/" + mPhotoPageAdapter.getCount());
     }
 
     @Override
     public void onViewTap(View view, float x, float y) {
         if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
             mLastShowHiddenTime = System.currentTimeMillis();
+
             if (mIsHidden) {
                 showTitleBar();
+
             } else {
                 hiddenTitleBar();
             }
@@ -212,82 +226,29 @@ public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements Pho
     }
 
     private void showTitleBar() {
-        if (mToolbar != null) {
-            ViewCompat.animate(mToolbar).translationY(0).setInterpolator(new DecelerateInterpolator(2)).setListener(new ViewPropertyAnimatorListenerAdapter() {
+        if (toolbar != null) {
+            ViewCompat.animate(toolbar).translationY(0).setInterpolator(new DecelerateInterpolator(2)).setListener(new ViewPropertyAnimatorListenerAdapter() {
+
                 @Override
                 public void onAnimationEnd(View view) {
                     mIsHidden = false;
                 }
+
             }).start();
         }
     }
 
     private void hiddenTitleBar() {
-        if (mToolbar != null) {
-            ViewCompat.animate(mToolbar).translationY(-mToolbar.getHeight()).setInterpolator(new DecelerateInterpolator(2)).setListener(new ViewPropertyAnimatorListenerAdapter() {
+        if (toolbar != null) {
+            ViewCompat.animate(toolbar).translationY(-toolbar.getHeight()).setInterpolator(new DecelerateInterpolator(2)).setListener(new ViewPropertyAnimatorListenerAdapter() {
+
                 @Override
                 public void onAnimationEnd(View view) {
                     mIsHidden = true;
                 }
+
             }).start();
         }
     }
 
-    private synchronized void savePic() {
-        if (mSavePhotoTask != null) {
-            return;
-        }
-
-        final String url = mPhotoPageAdapter.getItem(mContentHvp.getCurrentItem());
-        File file;
-        if (url.startsWith("file")) {
-            file = new File(url.replace("file://", ""));
-            if (file.exists()) {
-                BGAPhotoPickerUtil.showSafe(getString(R.string.bga_pp_save_img_success_folder, file.getParentFile().getAbsolutePath()));
-                return;
-            }
-        }
-
-        // 通过MD5加密url生成文件名，避免多次保存同一张图片
-        file = new File(mSavePhotoDir, BGAPhotoPickerUtil.md5(url) + ".png");
-        if (file.exists()) {
-            BGAPhotoPickerUtil.showSafe(getString(R.string.bga_pp_save_img_success_folder, mSavePhotoDir.getAbsolutePath()));
-            return;
-        }
-
-        mSavePhotoTask = new BGASavePhotoTask(this, this, file);
-        BGAImage.download(url, new BGAImageLoader.DownloadDelegate() {
-            @Override
-            public void onSuccess(String url, Bitmap bitmap) {
-                if (mSavePhotoTask != null) {
-                    mSavePhotoTask.setBitmapAndPerform(bitmap);
-                }
-            }
-
-            @Override
-            public void onFailed(String url) {
-                mSavePhotoTask = null;
-                BGAPhotoPickerUtil.show(R.string.bga_pp_save_img_failure);
-            }
-        });
-    }
-
-    @Override
-    public void onPostExecute(Void aVoid) {
-        mSavePhotoTask = null;
-    }
-
-    @Override
-    public void onTaskCancelled() {
-        mSavePhotoTask = null;
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mSavePhotoTask != null) {
-            mSavePhotoTask.cancelTask();
-            mSavePhotoTask = null;
-        }
-        super.onDestroy();
-    }
 }
