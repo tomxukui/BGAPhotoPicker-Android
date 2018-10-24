@@ -35,6 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/bga_tv_title"
-        android:src="@mipmap/bga_pp_ic_arrow_down" />
+        android:src="@mipmap/bga_ic_arrow_down" />
 
 </RelativeLayout>

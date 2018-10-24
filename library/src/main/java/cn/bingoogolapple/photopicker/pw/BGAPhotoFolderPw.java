@@ -155,7 +155,7 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
         protected void fillData(BGAViewHolderHelper helper, int position, BGAPhotoFolderModel model) {
             helper.setText(R.id.tv_item_photo_folder_name, model.name);
             helper.setText(R.id.tv_item_photo_folder_count, String.valueOf(model.getCount()) + "张");
-            BGAImage.display(helper.getImageView(R.id.iv_item_photo_folder_photo), R.mipmap.bga_pp_ic_holder_dark, model.coverPath, mImageWidth, mImageHeight);
+            BGAImage.display(helper.getImageView(R.id.iv_item_photo_folder_photo), R.mipmap.bga_ic_holder_dark, model.coverPath, mImageWidth, mImageHeight);
         }
 
     }

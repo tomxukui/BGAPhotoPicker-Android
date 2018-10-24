@@ -228,14 +228,14 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
                 String currentPhoto = mPhotoPageAdapter.getPosition(viewPager.getCurrentItem());
                 if (mSelectedPhotos.contains(currentPhoto)) {
                     mSelectedPhotos.remove(currentPhoto);
-                    tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_normal, 0, 0, 0);
+                    tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_ic_cb_normal, 0, 0, 0);
                     renderTopRightBtn();
 
                 } else {
                     if (mMaxChooseCount == 1) {// 单选
                         mSelectedPhotos.clear();
                         mSelectedPhotos.add(currentPhoto);
-                        tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_checked, 0, 0, 0);
+                        tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_ic_cb_checked, 0, 0, 0);
                         renderTopRightBtn();
 
                     } else {// 多选
@@ -244,7 +244,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
 
                         } else {
                             mSelectedPhotos.add(currentPhoto);
-                            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_checked, 0, 0, 0);
+                            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_ic_cb_checked, 0, 0, 0);
                             renderTopRightBtn();
                         }
                     }
@@ -337,10 +337,10 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
         tv_title.setText((viewPager.getCurrentItem() + 1) + "/" + mPhotoPageAdapter.getCount());
 
         if (mSelectedPhotos.contains(mPhotoPageAdapter.getPosition(viewPager.getCurrentItem()))) {
-            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_checked, 0, 0, 0);
+            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_ic_cb_checked, 0, 0, 0);
 
         } else {
-            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_normal, 0, 0, 0);
+            tv_choose.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_ic_cb_normal, 0, 0, 0);
         }
     }
 

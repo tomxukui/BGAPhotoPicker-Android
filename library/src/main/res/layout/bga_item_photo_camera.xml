@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scaleType="centerInside"
-    android:src="@mipmap/bga_pp_ic_camera"
+    android:src="@mipmap/bga_ic_camera"
     app:siv_scale="1" />

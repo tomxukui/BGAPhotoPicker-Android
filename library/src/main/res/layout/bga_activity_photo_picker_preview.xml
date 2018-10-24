@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="right|clip_vertical"
             android:clickable="true"
-            android:drawableLeft="@mipmap/bga_pp_ic_cb_normal"
+            android:drawableLeft="@mipmap/bga_ic_cb_normal"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:paddingLeft="16sp"

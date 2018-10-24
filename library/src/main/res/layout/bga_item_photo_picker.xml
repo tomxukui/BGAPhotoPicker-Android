@@ -21,6 +21,6 @@
         android:paddingLeft="8dp"
         android:paddingRight="4dp"
         android:paddingTop="4dp"
-        android:src="@mipmap/bga_pp_ic_cb_normal" />
+        android:src="@mipmap/bga_ic_cb_normal" />
 
 </FrameLayout>

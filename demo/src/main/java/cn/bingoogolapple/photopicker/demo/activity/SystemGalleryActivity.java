@@ -91,7 +91,7 @@ public class SystemGalleryActivity extends BaseActivity {
                 }
 
             } else if (requestCode == REQUEST_CODE_CROP) {
-                BGAImage.display(iv_avatar, R.mipmap.bga_pp_ic_holder_light, mPhotoHelper.getCropFilePath(), BGABaseAdapterUtil.dp2px(200));
+                BGAImage.display(iv_avatar, R.mipmap.bga_ic_holder_light, mPhotoHelper.getCropFilePath(), BGABaseAdapterUtil.dp2px(200));
             }
 
         } else {

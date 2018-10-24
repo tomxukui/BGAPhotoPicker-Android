@@ -48,14 +48,14 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, String model) {
         if (getItemViewType(position) == R.layout.bga_item_photo_picker) {
-            BGAImage.display(helper.getImageView(R.id.iv_photo), R.mipmap.bga_pp_ic_holder_dark, model, mPhotoSize);
+            BGAImage.display(helper.getImageView(R.id.iv_photo), R.mipmap.bga_ic_holder_dark, model, mPhotoSize);
 
             if (mSelectedPhotos.contains(model)) {
-                helper.setImageResource(R.id.iv_check, R.mipmap.bga_pp_ic_cb_checked);
+                helper.setImageResource(R.id.iv_check, R.mipmap.bga_ic_cb_checked);
                 helper.getImageView(R.id.iv_photo).setColorFilter(Color.parseColor("#55000000"));
 
             } else {
-                helper.setImageResource(R.id.iv_check, R.mipmap.bga_pp_ic_cb_normal);
+                helper.setImageResource(R.id.iv_check, R.mipmap.bga_ic_cb_normal);
                 helper.getImageView(R.id.iv_photo).setColorFilter(null);
             }
         }
