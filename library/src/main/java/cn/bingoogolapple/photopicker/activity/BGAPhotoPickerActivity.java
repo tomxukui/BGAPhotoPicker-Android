@@ -52,7 +52,6 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     private LinearLayout linear_container;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-
     private TextView tv_title;
     private ImageView iv_titleArrow;
     private TextView tv_submit;

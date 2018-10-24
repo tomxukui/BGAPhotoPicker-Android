@@ -17,6 +17,9 @@ public class BGAKey {
     public static final String EXTRA_SPAN_COUNT = "EXTRA_SPAN_COUNT";
     public static final String EXTRA_GRID_SPACE = "EXTRA_GRID_SPACE";
     public static final String EXTRA_SELECTED_PHOTOS = "EXTRA_SELECTED_PHOTOS";
-
+    public static final String EXTRA_PREVIEW_PHOTOS = "EXTRA_PREVIEW_PHOTOS";
+    public static final String EXTRA_IS_HIDDEN = "EXTRA_IS_HIDDEN";
+    public static final String EXTRA_IS_FROM_TAKE_PHOTO = "EXTRA_IS_FROM_TAKE_PHOTO";
+    public static final String EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION";
 
 }
