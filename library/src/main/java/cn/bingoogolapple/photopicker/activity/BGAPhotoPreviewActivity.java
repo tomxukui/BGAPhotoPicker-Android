@@ -121,6 +121,14 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity {
         setView();
     }
 
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) mPhotoPageAdapter.getData());
+        setResult(RESULT_OK, intent);
+        super.finish();
+    }
+
     private void initData() {
         mDeleteIcon = getIntent().getIntExtra(BGAKey.EXTRA_DELETE_ICON, R.drawable.bga_ic_delete);
         mActionBarColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, Color.parseColor("#000000"));
@@ -163,7 +171,6 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
         toolbar.setBackgroundColor(mActionBarColor);
         toolbar.setNavigationIcon(mBackResId);
 
@@ -197,7 +204,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bga_menu_photo_preview, menu);
-        MenuItem menuItem = menu.findItem(R.id.item_photo_preview_title);
+        MenuItem menuItem = menu.findItem(R.id.item_preview);
         View actionView = menuItem.getActionView();
 
         tv_title = actionView.findViewById(R.id.tv_title);
@@ -212,13 +219,26 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity {
             @Override
             public void onNoDoubleClick(View v) {
                 mPhotoPageAdapter.remove(viewPager.getCurrentItem());
-
                 renderTitleTv();
+
+                if (mPhotoPageAdapter.getCount() == 0) {
+                    finish();
+                }
             }
 
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void renderTitleTv() {

@@ -283,7 +283,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bga_menu_photo_picker_preview, menu);
-        MenuItem menuItem = menu.findItem(R.id.item_photo_picker_preview_title);
+        MenuItem menuItem = menu.findItem(R.id.item_picker_preview);
         View actionView = menuItem.getActionView();
 
         tv_title = actionView.findViewById(R.id.bga_tv_title);
@@ -308,6 +308,16 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
         renderTopRightBtn();
         handlePageSelectedStatus();
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

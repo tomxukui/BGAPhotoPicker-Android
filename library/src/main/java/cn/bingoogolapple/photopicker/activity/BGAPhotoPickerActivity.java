@@ -290,42 +290,16 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         showLoadingDialog();
         mLoadPhotoTask = new BGALoadPhotoTask(this, this, mTakePhotoEnabled, mTitle).perform();
     }
 
-    private void showLoadingDialog() {
-        if (mLoadingDialog == null) {
-            mLoadingDialog = new AppCompatDialog(this);
-            mLoadingDialog.setContentView(R.layout.bga_pp_dialog_loading);
-            mLoadingDialog.setCancelable(false);
-        }
-
-        mLoadingDialog.show();
-    }
-
-    private void dismissLoadingDialog() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bga_menu_photo_picker, menu);
-        MenuItem menuItem = menu.findItem(R.id.item_photo_picker_title);
+        MenuItem menuItem = menu.findItem(R.id.item_picker);
         View actionView = menuItem.getActionView();
 
         tv_title = actionView.findViewById(R.id.bga_tv_title);
@@ -356,6 +330,32 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
         renderTopRightBtn();
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showLoadingDialog() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new AppCompatDialog(this);
+            mLoadingDialog.setContentView(R.layout.bga_pp_dialog_loading);
+            mLoadingDialog.setCancelable(false);
+        }
+
+        mLoadingDialog.show();
+    }
+
+    private void dismissLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 
     /**

@@ -8,7 +8,7 @@
     <application>
         <!--图片预览界面-->
         <activity
-            android:name="cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity"
+            android:name=".activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -16,7 +16,7 @@
 
         <!--图片选择界面-->
         <activity
-            android:name="cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity"
+            android:name=".activity.BGAPhotoPickerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -24,20 +24,24 @@
 
         <!--图片选择预览界面-->
         <activity
-            android:name="cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity"
+            android:name=".activity.BGAPhotoPickerPreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         
         <provider
-            android:name="cn.bingoogolapple.photopicker.util.BGAPhotoFileProvider"
+            android:name=".util.BGAPhotoFileProvider"
             android:authorities="${applicationId}.bga_photo_picker.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/bga_photo_picker_file_paths" />
+
         </provider>
+
     </application>
+
 </manifest>
