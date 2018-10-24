@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.bingoogolapple.photopicker.widget.ScaleImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/iv_camera"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scaleType="centerInside"
+    android:src="@mipmap/bga_pp_ic_camera"
+    app:siv_scale="1" />

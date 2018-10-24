@@ -476,13 +476,13 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int position) {
-        if (view.getId() == R.id.iv_item_photo_camera_camera) {
+        if (view.getId() == R.id.iv_camera) {
             handleTakePhoto();
 
-        } else if (view.getId() == R.id.iv_item_photo_picker_photo) {
+        } else if (view.getId() == R.id.iv_photo) {
             changeToPreview(position);
 
-        } else if (view.getId() == R.id.iv_item_photo_picker_flag) {
+        } else if (view.getId() == R.id.iv_check) {
             handleClickSelectFlagIv(position);
         }
     }
