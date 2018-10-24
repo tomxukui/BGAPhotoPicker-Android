@@ -195,6 +195,8 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
             @Override
             public void onNoDoubleClick(View v) {
                 mPhotoPageAdapter.remove(viewPager.getCurrentItem());
+
+                renderTitleTv();
             }
 
         });

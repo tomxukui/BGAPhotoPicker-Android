@@ -19,4 +19,5 @@
         android:id="@+id/tv_system_gallery_crop_take_photo"
         style="@style/MatchWrapTv"
         android:text="拍照" />
+
 </LinearLayout>
