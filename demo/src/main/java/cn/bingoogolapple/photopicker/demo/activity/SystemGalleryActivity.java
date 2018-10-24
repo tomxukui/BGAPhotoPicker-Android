@@ -42,7 +42,7 @@ public class SystemGalleryActivity extends BaseActivity {
             try {
                 startActivityForResult(mPhotoHelper.getTakePhotoIntent(), REQUEST_CODE_TAKE_PHOTO);
             } catch (Exception e) {
-                BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_take_photo);
+                BGAPhotoPickerUtil.show("当前设备不支持拍照");
             }
         }, new String[]{Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA}));
     }
@@ -76,7 +76,7 @@ public class SystemGalleryActivity extends BaseActivity {
                     startActivityForResult(mPhotoHelper.getCropIntent(mPhotoHelper.getFilePathFromUri(data.getData()), 200, 200), REQUEST_CODE_CROP);
                 } catch (Exception e) {
                     mPhotoHelper.deleteCropFile();
-                    BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_crop);
+                    BGAPhotoPickerUtil.show("当前设备不支持裁剪图片");
                     e.printStackTrace();
                 }
 
@@ -86,7 +86,7 @@ public class SystemGalleryActivity extends BaseActivity {
                 } catch (Exception e) {
                     mPhotoHelper.deleteCameraFile();
                     mPhotoHelper.deleteCropFile();
-                    BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_crop);
+                    BGAPhotoPickerUtil.show("当前设备不支持裁剪图片");
                     e.printStackTrace();
                 }
 

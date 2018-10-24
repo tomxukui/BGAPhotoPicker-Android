@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bga_pp_selector_item_folder"
+    android:background="@drawable/bga_selector_item_folder"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/bga_pp_size_level3">
+    android:padding="12dp">
 
     <ImageView
         android:id="@+id/iv_item_photo_folder_photo"
@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/bga_pp_size_level3"
+        android:layout_marginLeft="12dp"
         android:orientation="vertical">
 
         <TextView
@@ -26,20 +26,20 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="#282828"
-            android:textSize="@dimen/bga_pp_textSize_level2" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_item_photo_folder_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/bga_pp_size_level2"
-            android:drawableLeft="@mipmap/bga_pp_ic_folder"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@mipmap/bga_ic_folder"
             android:drawablePadding="5dp"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:singleLine="true"
             android:textColor="#585858"
-            android:textSize="@dimen/bga_pp_textSize_level1" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

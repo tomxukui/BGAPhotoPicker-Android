@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="150dp"
-    android:paddingLeft="@dimen/bga_pp_size_level3"
-    android:paddingRight="@dimen/bga_pp_size_level3">
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_photo_folder_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bga_pp_shape_photo_folder_pw_bg"
+        android:background="@drawable/bga_bg_shape_photo_pw_folder"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/bga_pp_size_level1"
+        android:paddingBottom="4dp"
         android:scrollbars="none" />
 
 </LinearLayout>

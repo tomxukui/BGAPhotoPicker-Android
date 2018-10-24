@@ -240,7 +240,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
 
                     } else {// 多选
                         if (mMaxChooseCount == mSelectedPhotos.size()) {
-                            BGAPhotoPickerUtil.show(getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+                            BGAPhotoPickerUtil.show(String.format("最多只能选择 %1$d 张图片", mMaxChooseCount));
 
                         } else {
                             mSelectedPhotos.add(currentPhoto);

@@ -345,7 +345,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     private void showLoadingDialog() {
         if (mLoadingDialog == null) {
             mLoadingDialog = new AppCompatDialog(this);
-            mLoadingDialog.setContentView(R.layout.bga_pp_dialog_loading);
+            mLoadingDialog.setContentView(R.layout.bga_dialog_loading);
             mLoadingDialog.setCancelable(false);
         }
 
@@ -398,7 +398,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
      * 显示只能选择 mMaxChooseCount 张图的提示
      */
     private void toastMaxCountTip() {
-        BGAPhotoPickerUtil.show(getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+        BGAPhotoPickerUtil.show(String.format("最多只能选择 %1$d 张图片", mMaxChooseCount));
     }
 
     @Override
@@ -431,6 +431,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
                 returnSelectedPhotos((List<String>) data.getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS));
             }
+
         } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_PREVIEW) {
             if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {//从拍照预览界面返回，删除之前拍的照片
                 mPhotoHelper.deleteCameraFile();
@@ -491,11 +492,12 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
      * 处理拍照
      */
     private void handleTakePhoto() {
-        if (mMaxChooseCount == 1) {
-            // 单选
+        if (mMaxChooseCount == 1) {// 单选
             takePhoto();
+
         } else if (mPicAdapter.getSelectedCount() == mMaxChooseCount) {
             toastMaxCountTip();
+
         } else {
             takePhoto();
         }
@@ -507,8 +509,9 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     private void takePhoto() {
         try {
             startActivityForResult(mPhotoHelper.getTakePhotoIntent(), REQUEST_TAKE_PHOTO);
+
         } catch (Exception e) {
-            BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_take_photo);
+            BGAPhotoPickerUtil.show("当前设备不支持拍照");
         }
     }
 

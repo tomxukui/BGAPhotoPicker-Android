@@ -43,7 +43,7 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
     private int mCurrentPosition;
 
     public BGAPhotoFolderPw(Activity activity, View anchorView, Delegate delegate) {
-        super(activity, R.layout.bga_pp_pw_photo_folder, anchorView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        super(activity, R.layout.bga_pw_photo_folder, anchorView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         mDelegate = delegate;
     }
 
@@ -145,7 +145,7 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
         private int mImageHeight;
 
         public FolderAdapter(RecyclerView recyclerView) {
-            super(recyclerView, R.layout.bga_pp_item_photo_folder);
+            super(recyclerView, R.layout.bga_item_photo_folder);
             mData = new ArrayList<>();
             mImageWidth = BGABaseAdapterUtil.dp2px(80);
             mImageHeight = BGABaseAdapterUtil.dp2px(60);
