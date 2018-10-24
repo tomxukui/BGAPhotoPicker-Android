@@ -5,17 +5,19 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_moment_list_add"
+    <Button
+        android:id="@+id/btn_circle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="添加朋友圈" />
 
-    <TextView
-        android:id="@+id/tv_moment_list_system"
+    <Button
+        android:id="@+id/btn_system"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:text="测试系统相册" />
 
 </LinearLayout>
