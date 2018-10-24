@@ -18,24 +18,21 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.ablingbling.library.photoview.PhotoViewAttacher;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
-import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
+import cn.bingoogolapple.photopicker.adapter.BGAViewPageAdapter;
 import cn.bingoogolapple.photopicker.common.BGAKey;
-import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
 import qiu.niorgai.StatusBarCompat;
 
-public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoViewAttacher.OnViewTapListener {
+public class BGAPhotoPreviewActivity extends AppCompatActivity {
 
     private FrameLayout frame_container;
     private Toolbar toolbar;
-    private BGAHackyViewPager viewPager;
+    private ViewPager viewPager;
     private TextView tv_title;
     private AppCompatImageView iv_delete;
 
@@ -48,7 +45,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
     private int mCurrentPosition;
     private List<String> mSelectedPhotos;
 
-    private BGAPhotoPageAdapter mPhotoPageAdapter;
+    private BGAViewPageAdapter mPhotoPageAdapter;
 
     /**
      * 上一次标题栏显示或隐藏的时间戳
@@ -136,6 +133,25 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
         if (mSelectedPhotos == null) {
             mSelectedPhotos = new ArrayList<>();
         }
+
+        mPhotoPageAdapter = new BGAViewPageAdapter(mSelectedPhotos);
+        mPhotoPageAdapter.setOnItemClickListener(new BGAViewPageAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position, String photo) {
+                if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
+                    mLastShowHiddenTime = System.currentTimeMillis();
+
+                    if (mIsHidden) {
+                        showTitleBar();
+
+                    } else {
+                        hiddenTitleBar();
+                    }
+                }
+            }
+
+        });
     }
 
     private void initView() {
@@ -164,7 +180,6 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
     }
 
     private void setView() {
-        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, mSelectedPhotos);
         viewPager.setAdapter(mPhotoPageAdapter);
         viewPager.setCurrentItem(mCurrentPosition, false);
 
@@ -212,20 +227,6 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
         }
 
         tv_title.setText((viewPager.getCurrentItem() + 1) + "/" + mPhotoPageAdapter.getCount());
-    }
-
-    @Override
-    public void onViewTap(View view, float x, float y) {
-        if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
-            mLastShowHiddenTime = System.currentTimeMillis();
-
-            if (mIsHidden) {
-                showTitleBar();
-
-            } else {
-                hiddenTitleBar();
-            }
-        }
     }
 
     private void showTitleBar() {

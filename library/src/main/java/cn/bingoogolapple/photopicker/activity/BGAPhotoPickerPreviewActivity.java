@@ -18,25 +18,22 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.ablingbling.library.photoview.PhotoViewAttacher;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
-import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
+import cn.bingoogolapple.photopicker.adapter.BGAViewPageAdapter;
 import cn.bingoogolapple.photopicker.common.BGAKey;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
-import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
 import qiu.niorgai.StatusBarCompat;
 
-public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements PhotoViewAttacher.OnViewTapListener {
+public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
 
     private FrameLayout frame_container;
     private Toolbar toolbar;
-    private BGAHackyViewPager viewPager;
+    private ViewPager viewPager;
     private FrameLayout frame_choose;
     private TextView tv_choose;
     private TextView tv_title;
@@ -55,7 +52,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
     private boolean mIsFromTakePhoto;//是否是拍完照后跳转过来
     private int mCurrentPosition;
 
-    private BGAPhotoPageAdapter mPhotoPageAdapter;
+    private BGAViewPageAdapter mPhotoPageAdapter;
 
     public static class IntentBuilder {
 
@@ -184,6 +181,25 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
         mIsFromTakePhoto = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_FROM_TAKE_PHOTO, false);
 
         mCurrentPosition = getIntent().getIntExtra(BGAKey.EXTRA_CURRENT_POSITION, 0);
+
+        mPhotoPageAdapter = new BGAViewPageAdapter(mPreviewPhotos);
+        mPhotoPageAdapter.setOnItemClickListener(new BGAViewPageAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position, String photo) {
+                if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
+                    mLastShowHiddenTime = System.currentTimeMillis();
+
+                    if (mIsHidden) {
+                        showTitleBarAndChooseBar();
+
+                    } else {
+                        hiddenToolBarAndChooseBar();
+                    }
+                }
+            }
+
+        });
     }
 
     private void initView() {
@@ -250,7 +266,6 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
     private void setView() {
         frame_choose.setVisibility(mIsFromTakePhoto ? View.GONE : View.VISIBLE);
 
-        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, mPreviewPhotos);
         viewPager.setAdapter(mPhotoPageAdapter);
         viewPager.setCurrentItem(mCurrentPosition);
 
@@ -334,20 +349,6 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
         } else {
             tv_submit.setEnabled(true);
             tv_submit.setText(mSubmit + "(" + mSelectedPhotos.size() + "/" + mMaxChooseCount + ")");
-        }
-    }
-
-    @Override
-    public void onViewTap(View view, float x, float y) {
-        if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
-            mLastShowHiddenTime = System.currentTimeMillis();
-
-            if (mIsHidden) {
-                showTitleBarAndChooseBar();
-
-            } else {
-                hiddenToolBarAndChooseBar();
-            }
         }
     }
 
