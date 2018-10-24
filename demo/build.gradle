@@ -32,7 +32,6 @@ dependencies {
     implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation project(':library')
 
-    implementation 'com.github.tomxukui:PhotoView:1.0.1'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     implementation('com.github.niorgai:StatusBarCompat:2.1.4', {
         exclude group: 'com.android.support'

@@ -29,7 +29,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly rootProject.ext.dependencies["appcompat-v7"]
     compileOnly rootProject.ext.dependencies["recyclerview-v7"]
-    compileOnly 'com.github.tomxukui:PhotoView:1.0.1'
     compileOnly 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     compileOnly 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'

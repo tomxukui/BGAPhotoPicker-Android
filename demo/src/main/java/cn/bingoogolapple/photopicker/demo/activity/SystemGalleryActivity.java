@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.yanzhenjie.permission.Permission;
@@ -23,7 +22,7 @@ public class SystemGalleryActivity extends BaseActivity {
     private static final int REQUEST_CODE_TAKE_PHOTO = 2;
     private static final int REQUEST_CODE_CROP = 3;
 
-    private ImageView mAvatarIv;
+    private ImageView iv_avatar;
 
     private BGAPhotoHelper mPhotoHelper;
 
@@ -36,7 +35,16 @@ public class SystemGalleryActivity extends BaseActivity {
     }
 
     private void initView() {
-        mAvatarIv = findViewById(R.id.iv_system_gallery_crop_avatar);
+        iv_avatar = findViewById(R.id.iv_avatar);
+
+        findViewById(R.id.btn_album).setOnClickListener(v -> requestPermission(data -> startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), REQUEST_CODE_CHOOSE_PHOTO), Permission.WRITE_EXTERNAL_STORAGE));
+        findViewById(R.id.btn_camera).setOnClickListener(v -> requestPermission(data -> {
+            try {
+                startActivityForResult(mPhotoHelper.getTakePhotoIntent(), REQUEST_CODE_TAKE_PHOTO);
+            } catch (Exception e) {
+                BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_take_photo);
+            }
+        }, new String[]{Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA}));
     }
 
     private void setView() {
@@ -57,21 +65,6 @@ public class SystemGalleryActivity extends BaseActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         BGAPhotoHelper.onRestoreInstanceState(mPhotoHelper, savedInstanceState);
-    }
-
-    public void onClick(View v) {
-        if (v.getId() == R.id.tv_system_gallery_crop_choose) {
-            requestPermission(data -> startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), REQUEST_CODE_CHOOSE_PHOTO), Permission.WRITE_EXTERNAL_STORAGE);
-
-        } else if (v.getId() == R.id.tv_system_gallery_crop_take_photo) {
-            requestPermission(data -> {
-                try {
-                    startActivityForResult(mPhotoHelper.getTakePhotoIntent(), REQUEST_CODE_TAKE_PHOTO);
-                } catch (Exception e) {
-                    BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_take_photo);
-                }
-            }, new String[] {Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA});
-        }
     }
 
     @Override
@@ -98,7 +91,7 @@ public class SystemGalleryActivity extends BaseActivity {
                 }
 
             } else if (requestCode == REQUEST_CODE_CROP) {
-                BGAImage.display(mAvatarIv, R.mipmap.bga_pp_ic_holder_light, mPhotoHelper.getCropFilePath(), BGABaseAdapterUtil.dp2px(200));
+                BGAImage.display(iv_avatar, R.mipmap.bga_pp_ic_holder_light, mPhotoHelper.getCropFilePath(), BGABaseAdapterUtil.dp2px(200));
             }
 
         } else {
