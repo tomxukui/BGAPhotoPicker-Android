@@ -1,18 +1,3 @@
-/**
- * Copyright 2016 bingoogolapple
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.bingoogolapple.photopicker.util;
 
 import android.content.Context;
@@ -26,7 +11,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.bingoogolapple.photopicker.R;
 import cn.bingoogolapple.photopicker.model.BGAPhotoFolderModel;
 
 /**
@@ -35,14 +19,16 @@ import cn.bingoogolapple.photopicker.model.BGAPhotoFolderModel;
  * 描述:
  */
 public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAPhotoFolderModel>> {
+
     private Context mContext;
     private boolean mTakePhotoEnabled;
+    private String mAllPhotoDes;
 
-
-    public BGALoadPhotoTask(Callback<ArrayList<BGAPhotoFolderModel>> callback, Context context, boolean takePhotoEnabled) {
+    public BGALoadPhotoTask(Callback<ArrayList<BGAPhotoFolderModel>> callback, Context context, boolean takePhotoEnabled, String allPhotoDes) {
         super(callback);
         mContext = context.getApplicationContext();
         mTakePhotoEnabled = takePhotoEnabled;
+        mAllPhotoDes = allPhotoDes;
     }
 
     private static boolean isNotImageFile(String path) {
@@ -52,12 +38,6 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAPhotoFolde
 
         File file = new File(path);
         return !file.exists() || file.length() == 0;
-
-        // 获取图片的宽和高，但不把图片加载到内存中
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeFile(path, options);
-//        return options.outMimeType == null;
     }
 
     @Override
@@ -65,7 +45,7 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAPhotoFolde
         ArrayList<BGAPhotoFolderModel> imageFolderModels = new ArrayList<>();
 
         BGAPhotoFolderModel allImageFolderModel = new BGAPhotoFolderModel(mTakePhotoEnabled);
-        allImageFolderModel.name = mContext.getString(R.string.bga_pp_all_image);
+        allImageFolderModel.name = mAllPhotoDes;
         imageFolderModels.add(allImageFolderModel);
 
         HashMap<String, BGAPhotoFolderModel> imageFolderModelMap = new HashMap<>();

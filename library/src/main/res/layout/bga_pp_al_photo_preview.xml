@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/iv_photo_preview_download"
@@ -25,7 +23,6 @@
         android:singleLine="true"
         android:text="@string/bga_pp_view_photo"
         android:textColor="@color/bga_pp_common_textColor"
-        android:textSize="@dimen/bga_pp_actionbar_dir_title_textSize"
-        tools:background="#71CE7E" />
+        android:textSize="16sp" />
 
 </RelativeLayout>

@@ -17,21 +17,7 @@
     <color name="bga_pp_folder_count_textColor">#585858</color>
     <!-- 图片条目背景色 -->
     <color name="bga_pp_photo_item_bg">#303d42</color>
-    <!-- 拍摄照片文字颜色 -->
-    <color name="bga_pp_take_photo_textColor">#adb2bb</color>
     <!-- 图片处于选中状态时的遮罩层颜色 -->
     <color name="bga_pp_photo_selected_mask">#55000000</color>
-    <!-- 右上角确认按钮不可用时的颜色 -->
-    <color name="bga_pp_btn_confirm_disabled">#8017C7D1</color>
-    <!-- 右上角确认按钮可用时的颜色 -->
-    <color name="bga_pp_btn_confirm_enabled">#17C7D1</color>
-    <!-- 右上角确认按钮按下时的颜色 -->
-    <color name="bga_pp_btn_confirm_pressed">#CC17C7D1</color>
-    <!-- 预览界面底部背景色 -->
-    <color name="bga_pp_preview_bottom_bg">#303D42</color>
-    <!-- 数据加载对话框加载进度条的颜色 -->
-    <color name="bga_pp_loading_progress_startColor">@android:color/white</color>
-    <color name="bga_pp_loading_progress_centerColor">#17C7D1</color>
-    <color name="bga_pp_loading_progress_endColor">#CC17C7D1</color>
 
 </resources>

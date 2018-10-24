@@ -308,7 +308,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     protected void onStart() {
         super.onStart();
         showLoadingDialog();
-        mLoadPhotoTask = new BGALoadPhotoTask(this, this, mTakePhotoEnabled).perform();
+        mLoadPhotoTask = new BGALoadPhotoTask(this, this, mTakePhotoEnabled, mTitle).perform();
     }
 
     private void showLoadingDialog() {
@@ -352,9 +352,11 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
         });
 
-        tv_title.setText(R.string.bga_pp_all_image);
         if (mCurrentPhotoFolderModel != null) {
             tv_title.setText(mCurrentPhotoFolderModel.name);
+
+        } else {
+            tv_title.setText(mTitle);
         }
 
         renderTopRightBtn();
