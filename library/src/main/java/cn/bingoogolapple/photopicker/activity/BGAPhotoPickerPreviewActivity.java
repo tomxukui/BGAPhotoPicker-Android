@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.ablingbling.library.photoview.PhotoViewAttacher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
@@ -46,8 +48,8 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
     private int mBackResId;
     private int mBackgroundColor;
     private int mMaxChooseCount;//最多选择多少张图片，默认等于1，为单选
-    private ArrayList<String> mSelectedPhotos;
-    private ArrayList<String> mPreviewPhotos;
+    private List<String> mSelectedPhotos;
+    private List<String> mPreviewPhotos;
     private boolean mIsHidden;
     private long mLastShowHiddenTime;//上一次标题栏显示或隐藏的时间戳
     private boolean mIsFromTakePhoto;//是否是拍完照后跳转过来
@@ -104,16 +106,16 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
         /**
          * 当前已选中的图片路径集合
          */
-        public IntentBuilder selectedPhotos(ArrayList<String> photos) {
-            mIntent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, photos);
+        public IntentBuilder selectedPhotos(List<String> photos) {
+            mIntent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) photos);
             return this;
         }
 
         /**
          * 当前预览的图片路径集合
          */
-        public IntentBuilder previewPhotos(ArrayList<String> photos) {
-            mIntent.putStringArrayListExtra(BGAKey.EXTRA_PREVIEW_PHOTOS, photos);
+        public IntentBuilder previewPhotos(List<String> photos) {
+            mIntent.putExtra(BGAKey.EXTRA_PREVIEW_PHOTOS, (Serializable) photos);
             return this;
         }
 
@@ -136,13 +138,6 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
         public Intent build() {
             return mIntent;
         }
-    }
-
-    /**
-     * 获取已选择的图片集合
-     */
-    public static ArrayList<String> getSelectedPhotos(Intent intent) {
-        return intent.getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
     }
 
     /**
@@ -173,12 +168,12 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
         mBackgroundColor = getIntent().getIntExtra(BGAKey.EXTRA_BACKGROUND_COLOR, Color.parseColor("#000000"));
         mMaxChooseCount = getIntent().getIntExtra(BGAKey.EXTRA_MAX_CHOOSE_COUNT, 1);
 
-        mSelectedPhotos = getIntent().getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
+        mSelectedPhotos = (List<String>) getIntent().getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
         if (mSelectedPhotos == null) {
             mSelectedPhotos = new ArrayList<>();
         }
 
-        mPreviewPhotos = getIntent().getStringArrayListExtra(BGAKey.EXTRA_PREVIEW_PHOTOS);
+        mPreviewPhotos = (List<String>) getIntent().getSerializableExtra(BGAKey.EXTRA_PREVIEW_PHOTOS);
         if (TextUtils.isEmpty(mPreviewPhotos.get(0))) {
             mPreviewPhotos.remove(0);
         }
@@ -287,7 +282,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
             @Override
             public void onNoDoubleClick(View v) {
                 Intent intent = new Intent();
-                intent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, mSelectedPhotos);
+                intent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) mSelectedPhotos);
                 intent.putExtra(BGAKey.EXTRA_IS_FROM_TAKE_PHOTO, mIsFromTakePhoto);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -303,7 +298,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, mSelectedPhotos);
+        intent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) mSelectedPhotos);
         intent.putExtra(BGAKey.EXTRA_IS_FROM_TAKE_PHOTO, mIsFromTakePhoto);
         setResult(RESULT_CANCELED, intent);
         finish();

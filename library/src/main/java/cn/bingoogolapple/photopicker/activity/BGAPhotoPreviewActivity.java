@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import com.ablingbling.library.photoview.PhotoViewAttacher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 import cn.bingoogolapple.photopicker.R;
@@ -44,7 +46,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
     private int mBackgroundColor;
     private boolean mIsHidden = false;
     private int mCurrentPosition;
-    private ArrayList<String> mSelectedPhotos;
+    private List<String> mSelectedPhotos;
 
     private BGAPhotoPageAdapter mPhotoPageAdapter;
 
@@ -94,8 +96,8 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
         /**
          * 当前预览的图片路径集合
          */
-        public IntentBuilder selectedPhotos(ArrayList<String> photos) {
-            mIntent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, photos);
+        public IntentBuilder selectedPhotos(List<String> photos) {
+            mIntent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) photos);
             return this;
         }
 
@@ -130,7 +132,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity implements PhotoV
         mBackgroundColor = getIntent().getIntExtra(BGAKey.EXTRA_BACKGROUND_COLOR, Color.parseColor("#000000"));
         mIsHidden = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_HIDDEN, true);
         mCurrentPosition = getIntent().getIntExtra(BGAKey.EXTRA_CURRENT_POSITION, 0);
-        mSelectedPhotos = getIntent().getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
+        mSelectedPhotos = (List<String>) getIntent().getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
         if (mSelectedPhotos == null) {
             mSelectedPhotos = new ArrayList<>();
         }

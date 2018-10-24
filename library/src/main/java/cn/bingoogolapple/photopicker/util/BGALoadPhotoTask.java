@@ -10,21 +10,17 @@ import android.text.TextUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.bingoogolapple.photopicker.model.BGAPhotoFolderModel;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/7/8 上午10:32
- * 描述:
- */
-public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAPhotoFolderModel>> {
+public class BGALoadPhotoTask extends BGAAsyncTask<Void, List<BGAPhotoFolderModel>> {
 
     private Context mContext;
     private boolean mTakePhotoEnabled;
     private String mAllPhotoDes;
 
-    public BGALoadPhotoTask(Callback<ArrayList<BGAPhotoFolderModel>> callback, Context context, boolean takePhotoEnabled, String allPhotoDes) {
+    public BGALoadPhotoTask(Callback<List<BGAPhotoFolderModel>> callback, Context context, boolean takePhotoEnabled, String allPhotoDes) {
         super(callback);
         mContext = context.getApplicationContext();
         mTakePhotoEnabled = takePhotoEnabled;
@@ -127,4 +123,5 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAPhotoFolde
         }
         return this;
     }
+
 }

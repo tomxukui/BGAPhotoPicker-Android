@@ -11,6 +11,8 @@ import com.yanzhenjie.permission.Permission;
 import java.util.List;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity;
+import cn.bingoogolapple.photopicker.common.BGAKey;
 import cn.bingoogolapple.photopicker.demo.R;
 import cn.bingoogolapple.photopicker.demo.adapter.PhotoViewGroupRecyclerAdapter;
 import cn.bingoogolapple.photopicker.util.DensityUtil;
@@ -22,6 +24,7 @@ public class MomentAddActivity extends BaseActivity {
     private static final int MAX_COUNT = 3;
 
     private static final int REQUEST_PICK_PHOTO = 1;
+    private static final int REQUEST_PREVIEW_PHOTO = 2;
 
     private RecyclerView recyclerView;
     private PhotoViewGroupRecyclerAdapter mRecyclerAdapter;
@@ -41,8 +44,16 @@ public class MomentAddActivity extends BaseActivity {
 
             case REQUEST_PICK_PHOTO: {
                 if (resultCode == RESULT_OK) {
-                    List<String> photos = BGAPhotoPickerActivity.getSelectedPhotos(data);
+                    List<String> photos = (List<String>) data.getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
                     mRecyclerAdapter.addData(photos);
+                }
+            }
+            break;
+
+            case REQUEST_PREVIEW_PHOTO: {
+                if (resultCode == RESULT_OK) {
+                    List<String> photos = (List<String>) data.getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
+                    mRecyclerAdapter.setNewData(photos);
                 }
             }
             break;
@@ -55,7 +66,7 @@ public class MomentAddActivity extends BaseActivity {
 
     private void initData() {
         mRecyclerAdapter = new PhotoViewGroupRecyclerAdapter(MAX_COUNT);
-//        mRecyclerAdapter.setOnItemClickListener((itemView, photo, position) -> requestPermission(data -> previewImgs(), Permission.Group.STORAGE));
+        mRecyclerAdapter.setOnItemClickListener((itemView, photo, position) -> requestPermission(data -> previewImgs(position, mRecyclerAdapter.getData()), Permission.Group.STORAGE));
         mRecyclerAdapter.setOnAddClickListener(itemView -> requestPermission(data -> pickImgs(), Permission.Group.STORAGE, Permission.Group.CAMERA));
     }
 
@@ -83,6 +94,15 @@ public class MomentAddActivity extends BaseActivity {
                 .build();
 
         startActivityForResult(intent, REQUEST_PICK_PHOTO);
+    }
+
+    private void previewImgs(int position, List<String> photos) {
+        Intent intent = new BGAPhotoPreviewActivity.IntentBuilder(this)
+                .selectedPhotos(photos)
+                .currentPosition(position)
+                .build();
+
+        startActivityForResult(intent, REQUEST_PREVIEW_PHOTO);
     }
 
 }

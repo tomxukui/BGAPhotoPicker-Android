@@ -17,14 +17,14 @@ import cn.bingoogolapple.photopicker.widget.BGAImageView;
 
 public class BGAPhotoPageAdapter extends PagerAdapter {
 
-    private ArrayList<String> mPhotos;
+    private List<String> mPhotos;
     private PhotoViewAttacher.OnViewTapListener mOnViewTapListener;
 
     public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener listener) {
         this(listener, null);
     }
 
-    public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener listener, ArrayList<String> photos) {
+    public BGAPhotoPageAdapter(PhotoViewAttacher.OnViewTapListener listener, List<String> photos) {
         mOnViewTapListener = listener;
         mPhotos = (photos == null ? new ArrayList<String>() : photos);
     }

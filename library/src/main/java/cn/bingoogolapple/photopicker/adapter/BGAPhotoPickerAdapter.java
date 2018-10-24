@@ -3,6 +3,7 @@ package cn.bingoogolapple.photopicker.adapter;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -13,7 +14,7 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 
 public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
 
-    private ArrayList<String> mSelectedPhotos = new ArrayList<>();
+    private List<String> mSelectedPhotos = new ArrayList<>();
     private int mPhotoSize;
     private boolean mTakePhotoEnabled;
 
@@ -59,7 +60,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
         }
     }
 
-    public void setSelectedPhotos(ArrayList<String> selectedPhotos) {
+    public void setSelectedPhotos(List<String> selectedPhotos) {
         if (selectedPhotos != null) {
             mSelectedPhotos = selectedPhotos;
         }
@@ -67,7 +68,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
         notifyDataSetChanged();
     }
 
-    public ArrayList<String> getSelectedPhotos() {
+    public List<String> getSelectedPhotos() {
         return mSelectedPhotos;
     }
 

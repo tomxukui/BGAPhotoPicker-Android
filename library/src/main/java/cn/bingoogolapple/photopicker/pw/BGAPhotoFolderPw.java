@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGABaseAdapterUtil;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
@@ -73,7 +74,7 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
      *
      * @param data
      */
-    public void setData(ArrayList<BGAPhotoFolderModel> data) {
+    public void setData(List<BGAPhotoFolderModel> data) {
         mFolderAdapter.setData(data);
     }
 

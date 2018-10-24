@@ -22,8 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
@@ -42,7 +44,7 @@ import cn.bingoogolapple.photopicker.util.DensityUtil;
 import cn.bingoogolapple.photopicker.widget.GridSpacingItemDecoration;
 import qiu.niorgai.StatusBarCompat;
 
-public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnItemChildClickListener, BGAAsyncTask.Callback<ArrayList<BGAPhotoFolderModel>> {
+public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnItemChildClickListener, BGAAsyncTask.Callback<List<BGAPhotoFolderModel>> {
 
     private static final String STATE_SELECTED_PHOTOS = "STATE_SELECTED_PHOTOS";
 
@@ -76,8 +78,8 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     private int mSpanCount;
     private int mGridSpace;
     private boolean mTakePhotoEnabled;//是否可以拍照
-    private ArrayList<BGAPhotoFolderModel> mPhotoFolderModels;//图片目录数据集合
-    private ArrayList<String> mSelectedPhotos;
+    private List<BGAPhotoFolderModel> mPhotoFolderModels;//图片目录数据集合
+    private List<String> mSelectedPhotos;
 
     private BGAOnNoDoubleClickListener mOnClickShowPhotoFolderListener = new BGAOnNoDoubleClickListener() {
 
@@ -157,8 +159,8 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
         /**
          * 当前已选中的图片路径集合，可以传 null
          */
-        public IntentBuilder selectedPhotos(@Nullable ArrayList<String> selectedPhotos) {
-            mIntent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, selectedPhotos);
+        public IntentBuilder selectedPhotos(@Nullable List<String> selectedPhotos) {
+            mIntent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) selectedPhotos);
             return this;
         }
 
@@ -187,13 +189,6 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
             return mIntent;
         }
 
-    }
-
-    /**
-     * 获取已选择的图片集合
-     */
-    public static ArrayList<String> getSelectedPhotos(Intent intent) {
-        return intent.getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
     }
 
     @Override
@@ -244,7 +239,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
         mSpanCount = getIntent().getIntExtra(BGAKey.EXTRA_SPAN_COUNT, 4);
         mGridSpace = getIntent().getIntExtra(BGAKey.EXTRA_GRID_SPACE, DensityUtil.dp2px(2));
 
-        mSelectedPhotos = getIntent().getStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
+        mSelectedPhotos = (List<String>) getIntent().getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS);
         if (mSelectedPhotos == null) {
             mSelectedPhotos = new ArrayList<>();
 
@@ -366,9 +361,9 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     /**
      * 返回已选中的图片集合
      */
-    private void returnSelectedPhotos(ArrayList<String> selectedPhotos) {
+    private void returnSelectedPhotos(List<String> selectedPhotos) {
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(BGAKey.EXTRA_SELECTED_PHOTOS, selectedPhotos);
+        intent.putExtra(BGAKey.EXTRA_SELECTED_PHOTOS, (Serializable) selectedPhotos);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -411,7 +406,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_TAKE_PHOTO) {
-                ArrayList<String> photos = new ArrayList<>(Arrays.asList(mPhotoHelper.getCameraFilePath()));
+                List<String> photos = Arrays.asList(mPhotoHelper.getCameraFilePath());
 
                 Intent intent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
                         .submit(mPreviewSubmit)
@@ -434,14 +429,14 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
                     mPhotoHelper.refreshGallery();
                 }
 
-                returnSelectedPhotos(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+                returnSelectedPhotos((List<String>) data.getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS));
             }
         } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_PREVIEW) {
             if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {//从拍照预览界面返回，删除之前拍的照片
                 mPhotoHelper.deleteCameraFile();
 
             } else {
-                mPicAdapter.setSelectedPhotos(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+                mPicAdapter.setSelectedPhotos((List<String>) data.getSerializableExtra(BGAKey.EXTRA_SELECTED_PHOTOS));
                 renderTopRightBtn();
             }
         }
@@ -469,14 +464,14 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         BGAPhotoHelper.onSaveInstanceState(mPhotoHelper, outState);
-        outState.putStringArrayList(STATE_SELECTED_PHOTOS, mPicAdapter.getSelectedPhotos());
+        outState.putSerializable(STATE_SELECTED_PHOTOS, (Serializable) mPicAdapter.getSelectedPhotos());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         BGAPhotoHelper.onRestoreInstanceState(mPhotoHelper, savedInstanceState);
-        mPicAdapter.setSelectedPhotos(savedInstanceState.getStringArrayList(STATE_SELECTED_PHOTOS));
+        mPicAdapter.setSelectedPhotos((List<String>) savedInstanceState.getSerializable(STATE_SELECTED_PHOTOS));
     }
 
     @Override
@@ -535,7 +530,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
                 .backResId(mBackResId)
                 .backgroundColor(mBackgroundColor)
                 .isHidden(mPreviewIsHidden)
-                .previewPhotos((ArrayList<String>) mPicAdapter.getData())
+                .previewPhotos(mPicAdapter.getData())
                 .selectedPhotos(mPicAdapter.getSelectedPhotos())
                 .maxChooseCount(mMaxChooseCount)
                 .currentPosition(currentPosition)
@@ -605,7 +600,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     }
 
     @Override
-    public void onPostExecute(ArrayList<BGAPhotoFolderModel> photoFolderModels) {
+    public void onPostExecute(List<BGAPhotoFolderModel> photoFolderModels) {
         dismissLoadingDialog();
         mLoadPhotoTask = null;
         mPhotoFolderModels = photoFolderModels;
