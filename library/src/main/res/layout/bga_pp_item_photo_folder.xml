@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:textColor="@color/bga_pp_folder_name_textColor"
+            android:textColor="#282828"
             android:textSize="@dimen/bga_pp_textSize_level2" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:singleLine="true"
-            android:textColor="@color/bga_pp_folder_count_textColor"
+            android:textColor="#585858"
             android:textSize="@dimen/bga_pp_textSize_level1" />
 
     </LinearLayout>

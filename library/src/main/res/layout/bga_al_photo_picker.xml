@@ -15,7 +15,6 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:singleLine="true"
-        android:textColor="@color/bga_pp_common_textColor"
         android:textSize="15sp" />
 
     <TextView

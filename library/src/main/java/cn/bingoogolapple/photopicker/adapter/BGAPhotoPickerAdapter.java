@@ -1,5 +1,6 @@
 package cn.bingoogolapple.photopicker.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
 
             if (mSelectedPhotos.contains(model)) {
                 helper.setImageResource(R.id.iv_item_photo_picker_flag, R.mipmap.bga_pp_ic_cb_checked);
-                helper.getImageView(R.id.iv_item_photo_picker_photo).setColorFilter(helper.getConvertView().getResources().getColor(R.color.bga_pp_photo_selected_mask));
+                helper.getImageView(R.id.iv_item_photo_picker_photo).setColorFilter(Color.parseColor("#55000000"));
 
             } else {
                 helper.setImageResource(R.id.iv_item_photo_picker_flag, R.mipmap.bga_pp_ic_cb_normal);
