@@ -24,11 +24,6 @@ import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/6/24 下午2:57
- * 描述:图片选择预览界面
- */
 public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implements PhotoViewAttacher.OnViewTapListener {
 
     private static final String EXTRA_PREVIEW_PHOTOS = "EXTRA_PREVIEW_PHOTOS";

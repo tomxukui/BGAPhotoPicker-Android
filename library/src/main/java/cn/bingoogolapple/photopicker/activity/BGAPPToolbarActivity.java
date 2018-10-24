@@ -16,6 +16,7 @@ import cn.bingoogolapple.photopicker.R;
  * 描述:
  */
 public abstract class BGAPPToolbarActivity extends AppCompatActivity {
+
     protected String TAG;
     protected Toolbar mToolbar;
 
