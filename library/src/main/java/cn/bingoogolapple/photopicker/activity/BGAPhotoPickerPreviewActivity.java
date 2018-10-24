@@ -56,10 +56,41 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
     private BGAPhotoPageAdapter mPhotoPageAdapter;
 
     public static class IntentBuilder {
+
         private Intent mIntent;
 
         public IntentBuilder(Context context) {
             mIntent = new Intent(context, BGAPhotoPickerPreviewActivity.class);
+        }
+
+        public IntentBuilder submit(String submit) {
+            mIntent.putExtra(BGAKey.EXTRA_SUBMIT, submit);
+            return this;
+        }
+
+        public IntentBuilder actionBarColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder actionBarTextColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_ACTIONBAR_TEXT_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder backResId(int backResId) {
+            mIntent.putExtra(BGAKey.EXTRA_BACK_RESID, backResId);
+            return this;
+        }
+
+        public IntentBuilder backgroundColor(int color) {
+            mIntent.putExtra(BGAKey.EXTRA_BACKGROUND_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder isHidden(boolean isHidden) {
+            mIntent.putExtra(BGAKey.EXTRA_IS_HIDDEN, isHidden);
+            return this;
         }
 
         /**
@@ -152,7 +183,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity implements 
             mPreviewPhotos.remove(0);
         }
 
-        mIsHidden = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_HIDDEN, false);
+        mIsHidden = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_HIDDEN, true);
 
         // 处理是否是拍完照后跳转过来
         mIsFromTakePhoto = getIntent().getBooleanExtra(BGAKey.EXTRA_IS_FROM_TAKE_PHOTO, false);

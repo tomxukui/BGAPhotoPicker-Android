@@ -25,7 +25,8 @@
     <FrameLayout
         android:id="@+id/frame_choose"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom">
 
         <TextView
             android:id="@+id/tv_choose"

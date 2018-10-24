@@ -64,6 +64,8 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
     private String mTitle;
     private String mSubmit;
+    private String mPreviewSubmit;
+    private boolean mPreviewIsHidden;
     private int mActionBarColor;
     private int mActionBarTextColor;
     private int mBackResId;
@@ -106,6 +108,11 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
             return this;
         }
 
+        public IntentBuilder previewSubmit(String submit) {
+            mIntent.putExtra(BGAKey.EXTRA_PREVIEW_SUBMIT, submit);
+            return this;
+        }
+
         public IntentBuilder actionBarColor(int color) {
             mIntent.putExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, color);
             return this;
@@ -123,6 +130,11 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
         public IntentBuilder backgroundColor(int color) {
             mIntent.putExtra(BGAKey.EXTRA_BACKGROUND_COLOR, color);
+            return this;
+        }
+
+        public IntentBuilder previewIsHidden(boolean previewIsHidden) {
+            mIntent.putExtra(BGAKey.EXTRA_PREVIEW_IS_HIDDEN, previewIsHidden);
             return this;
         }
 
@@ -171,7 +183,6 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
             return this;
         }
 
-
         public Intent build() {
             return mIntent;
         }
@@ -204,6 +215,10 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
         if (mSubmit == null) {
             mSubmit = "完成";
         }
+
+        mPreviewSubmit = getIntent().getStringExtra(BGAKey.EXTRA_PREVIEW_SUBMIT);
+
+        mPreviewIsHidden = getIntent().getBooleanExtra(BGAKey.EXTRA_PREVIEW_IS_HIDDEN, true);
 
         mActionBarColor = getIntent().getIntExtra(BGAKey.EXTRA_ACTIONBAR_COLOR, Color.parseColor("#000000"));
 
@@ -396,7 +411,13 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
             if (requestCode == REQUEST_TAKE_PHOTO) {
                 ArrayList<String> photos = new ArrayList<>(Arrays.asList(mPhotoHelper.getCameraFilePath()));
 
-                Intent photoPickerPreview = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
+                Intent intent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
+                        .submit(mPreviewSubmit)
+                        .actionBarColor(mActionBarColor)
+                        .actionBarTextColor(mActionBarTextColor)
+                        .backResId(mBackResId)
+                        .backgroundColor(mBackgroundColor)
+                        .isHidden(mPreviewIsHidden)
                         .isFromTakePhoto(true)
                         .maxChooseCount(1)
                         .previewPhotos(photos)
@@ -404,20 +425,19 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
                         .currentPosition(0)
                         .build();
 
-                startActivityForResult(photoPickerPreview, REQUEST_PREVIEW);
+                startActivityForResult(intent, REQUEST_PREVIEW);
 
             } else if (requestCode == REQUEST_PREVIEW) {
-                if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {
-                    // 从拍照预览界面返回，刷新图库
+                if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {//从拍照预览界面返回，刷新图库
                     mPhotoHelper.refreshGallery();
                 }
 
                 returnSelectedPhotos(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
             }
         } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_PREVIEW) {
-            if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {
-                // 从拍照预览界面返回，删除之前拍的照片
+            if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {//从拍照预览界面返回，删除之前拍的照片
                 mPhotoHelper.deleteCameraFile();
+
             } else {
                 mPicAdapter.setSelectedPhotos(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 renderTopRightBtn();
@@ -506,7 +526,13 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
             currentPosition--;
         }
 
-        Intent photoPickerPreviewIntent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
+        Intent intent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
+                .submit(mPreviewSubmit)
+                .actionBarColor(mActionBarColor)
+                .actionBarTextColor(mActionBarTextColor)
+                .backResId(mBackResId)
+                .backgroundColor(mBackgroundColor)
+                .isHidden(mPreviewIsHidden)
                 .previewPhotos((ArrayList<String>) mPicAdapter.getData())
                 .selectedPhotos(mPicAdapter.getSelectedPhotos())
                 .maxChooseCount(mMaxChooseCount)
@@ -514,7 +540,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
                 .isFromTakePhoto(false)
                 .build();
 
-        startActivityForResult(photoPickerPreviewIntent, REQUEST_PREVIEW);
+        startActivityForResult(intent, REQUEST_PREVIEW);
     }
 
     /**
