@@ -221,7 +221,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
         frame_choose.setBackgroundColor(mActionBarColor);
         tv_choose.setTextColor(mActionBarTextColor);
 
-        tv_choose.setOnClickListener(new BGAOnNoDoubleClickListener() {
+        tv_choose.setOnClickListener(new BGAOnNoDoubleClickListener(500) {
 
             @Override
             public void onNoDoubleClick(View v) {
@@ -292,7 +292,7 @@ public class BGAPhotoPickerPreviewActivity extends AppCompatActivity {
         tv_title.setTextColor(mActionBarTextColor);
         tv_submit.setTextColor(mActionBarTextColor);
 
-        tv_submit.setOnClickListener(new BGAOnNoDoubleClickListener() {
+        tv_submit.setOnClickListener(new BGAOnNoDoubleClickListener(500) {
 
             @Override
             public void onNoDoubleClick(View v) {

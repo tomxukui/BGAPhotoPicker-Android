@@ -214,7 +214,7 @@ public class BGAPhotoPreviewActivity extends AppCompatActivity {
         renderTitleTv();
 
         iv_delete.setImageResource(mDeleteIcon);
-        iv_delete.setOnClickListener(new BGAOnNoDoubleClickListener() {
+        iv_delete.setOnClickListener(new BGAOnNoDoubleClickListener(500) {
 
             @Override
             public void onNoDoubleClick(View v) {

@@ -81,7 +81,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
     private List<BGAPhotoFolderModel> mPhotoFolderModels;//图片目录数据集合
     private List<String> mSelectedPhotos;
 
-    private BGAOnNoDoubleClickListener mOnClickShowPhotoFolderListener = new BGAOnNoDoubleClickListener() {
+    private BGAOnNoDoubleClickListener mOnClickShowPhotoFolderListener = new BGAOnNoDoubleClickListener(500) {
 
         @Override
         public void onNoDoubleClick(View v) {
@@ -312,7 +312,7 @@ public class BGAPhotoPickerActivity extends AppCompatActivity implements BGAOnIt
 
         tv_title.setOnClickListener(mOnClickShowPhotoFolderListener);
         iv_titleArrow.setOnClickListener(mOnClickShowPhotoFolderListener);
-        tv_submit.setOnClickListener(new BGAOnNoDoubleClickListener() {
+        tv_submit.setOnClickListener(new BGAOnNoDoubleClickListener(500) {
 
             @Override
             public void onNoDoubleClick(View v) {
